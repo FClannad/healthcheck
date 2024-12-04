@@ -1,0 +1,110 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.mapper.PhysicalExaminationMapper">
+
+    <select id="selectAll" resultType="com.example.entity.PhysicalExamination">
+        select physical_examination.*, examination_type.name as examinationTypeName, office.name as officeName, doctor.name as doctorName
+        from `physical_examination`
+        left join examination_type on physical_examination.examination_type_id = examination_type.id
+        left join office on physical_examination.office_id = office.id
+        left join doctor on physical_examination.doctor_id = doctor.id
+        <where>
+            <if test="name != null"> and physical_examination.name like concat('%', #{name}, '%')</if>
+        </where>
+        order by physical_examination.id desc
+    </select>
+
+
+    <select id="selectById" resultType="com.example.entity.PhysicalExamination">
+        select physical_examination.*, examination_type.name as examinationTypeName, office.name as officeName, doctor.name as doctorName
+        from `physical_examination`
+                 left join examination_type on physical_examination.examination_type_id = examination_type.id
+                 left join office on physical_examination.office_id = office.id
+                 left join doctor on physical_examination.doctor_id = doctor.id
+        where physical_examination.id = #{id}
+    </select>
+
+    <delete id="deleteById">
+        delete from `physical_examination`
+        where id = #{id}
+    </delete>
+
+    <insert id="insert" parameterType="com.example.entity.PhysicalExamination" useGeneratedKeys="true">
+        insert into physical_examination
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="name != null">name,</if>
+            <if test="englishName != null">english_name,</if>
+            <if test="cover != null">cover,</if>
+            <if test="examinationTypeId != null">examination_type_id,</if>
+            <if test="content != null">content,</if>
+            <if test="people != null">people,</if>
+            <if test="purpose != null">purpose,</if>
+            <if test="officeId != null">office_id,</if>
+            <if test="money != null">money,</if>
+            <if test="doctorId != null">doctor_id,</if>
+            <if test="attention != null">attention,</if>
+            <if test="address != null">address,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="name != null">#{name},</if>
+            <if test="englishName != null">#{englishName},</if>
+            <if test="cover != null">#{cover},</if>
+            <if test="examinationTypeId != null">#{examinationTypeId},</if>
+            <if test="content != null">#{content},</if>
+            <if test="people != null">#{people},</if>
+            <if test="purpose != null">#{purpose},</if>
+            <if test="officeId != null">#{officeId},</if>
+            <if test="money != null">#{money},</if>
+            <if test="doctorId != null">#{doctorId},</if>
+            <if test="attention != null">#{attention},</if>
+            <if test="address != null">#{address},</if>
+        </trim>
+    </insert>
+
+    <update id="updateById" parameterType="com.example.entity.PhysicalExamination">
+        update physical_examination
+        <set>
+            <if test="name != null">
+                name = #{name},
+            </if>
+            <if test="englishName != null">
+                english_name = #{englishName},
+            </if>
+            <if test="cover != null">
+                cover = #{cover},
+            </if>
+            <if test="examinationTypeId != null">
+                examination_type_id = #{examinationTypeId},
+            </if>
+            <if test="content != null">
+                content = #{content},
+            </if>
+            <if test="people != null">
+                people = #{people},
+            </if>
+            <if test="purpose != null">
+                purpose = #{purpose},
+            </if>
+            <if test="officeId != null">
+                office_id = #{officeId},
+            </if>
+            <if test="money != null">
+                money = #{money},
+            </if>
+            <if test="doctorId != null">
+                doctor_id = #{doctorId},
+            </if>
+            <if test="attention != null">
+                attention = #{attention},
+            </if>
+            <if test="address != null">
+                address = #{address},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+</mapper>
