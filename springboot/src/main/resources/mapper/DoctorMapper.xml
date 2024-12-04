@@ -1,0 +1,95 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.mapper.DoctorMapper">
+
+    <select id="selectAll" resultType="com.example.entity.Doctor">
+        select doctor.*, office.name as officeName, title.name as titleName from `doctor`
+        left join office on doctor.office_id = office.id
+        left join title on doctor.title_id = title.id
+        <where>
+            <if test="name != null"> and doctor.name like concat('%', #{name}, '%')</if>
+            <if test="officeId != null"> and doctor.office_id = #{officeId}</if>
+            <if test="titleId != null"> and doctor.title_id = #{titleId}</if>
+        </where>
+        order by doctor.id desc
+    </select>
+
+    <delete id="deleteById">
+        delete from `doctor`
+        where id = #{id}
+    </delete>
+
+    <insert id="insert" parameterType="com.example.entity.Doctor" useGeneratedKeys="true">
+        insert into `doctor`
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="username != null">username,</if>
+            <if test="password != null">password,</if>
+            <if test="name != null">name,</if>
+            <if test="phone != null">phone,</if>
+            <if test="email != null">email,</if>
+            <if test="avatar != null">avatar,</if>
+            <if test="role != null">role,</if>
+            <if test="workTime != null">work_time,</if>
+            <if test="descr != null">descr,</if>
+            <if test="officeId != null">office_id,</if>
+            <if test="titleId != null">title_id,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="username != null">#{username},</if>
+            <if test="password != null">#{password},</if>
+            <if test="name != null">#{name},</if>
+            <if test="phone != null">#{phone},</if>
+            <if test="email != null">#{email},</if>
+            <if test="avatar != null">#{avatar},</if>
+            <if test="role != null">#{role},</if>
+            <if test="workTime != null">#{workTime},</if>
+            <if test="descr != null">#{descr},</if>
+            <if test="officeId != null">#{officeId},</if>
+            <if test="titleId != null">#{titleId},</if>
+        </trim>
+    </insert>
+
+    <update id="updateById" parameterType="com.example.entity.Doctor">
+        update `doctor`
+        <set>
+            <if test="username != null">
+                username = #{username},
+            </if>
+            <if test="password != null">
+                password = #{password},
+            </if>
+            <if test="name != null">
+                name = #{name},
+            </if>
+            <if test="phone != null">
+                phone = #{phone},
+            </if>
+            <if test="email != null">
+                email = #{email},
+            </if>
+            <if test="avatar != null">
+                avatar = #{avatar},
+            </if>
+            <if test="role != null">
+                role = #{role},
+            </if>
+            <if test="workTime != null">
+                work_time = #{workTime},
+            </if>
+            <if test="descr != null">
+                descr = #{descr},
+            </if>
+            <if test="officeId != null">
+                office_id = #{officeId},
+            </if>
+            <if test="titleId != null">
+                title_id = #{titleId},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+</mapper>

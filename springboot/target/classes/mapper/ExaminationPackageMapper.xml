@@ -1,0 +1,73 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.mapper.ExaminationPackageMapper">
+
+    <select id="selectAll" resultType="com.example.entity.ExaminationPackage">
+        select examination_package.*, doctor.name as doctorName from `examination_package`
+        left join doctor on doctor.id = examination_package.doctor_id
+        <where>
+            <if test="name != null"> and examination_package.name like concat('%', #{name}, '%')</if>
+        </where>
+        order by examination_package.id desc
+    </select>
+
+    <delete id="deleteById">
+        delete from `examination_package`
+        where id = #{id}
+    </delete>
+
+    <!-- insert into examination_package (username, password, ...) values ('examination_package', 'examination_package', ...) -->
+    <insert id="insert" parameterType="com.example.entity.ExaminationPackage" useGeneratedKeys="true">
+        insert into examination_package
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="name != null">name,</if>
+            <if test="descr != null">descr,</if>
+            <if test="cover != null">cover,</if>
+            <if test="money != null">money,</if>
+            <if test="doctorId != null">doctor_id,</if>
+            <if test="address != null">address,</if>
+            <if test="examinations != null">examinations,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="name != null">#{name},</if>
+            <if test="descr != null">#{descr},</if>
+            <if test="cover != null">#{cover},</if>
+            <if test="money != null">#{money},</if>
+            <if test="doctorId != null">#{doctorId},</if>
+            <if test="address != null">#{address},</if>
+            <if test="examinations != null">#{examinations},</if>
+        </trim>
+    </insert>
+
+    <update id="updateById" parameterType="com.example.entity.ExaminationPackage">
+        update examination_package
+        <set>
+            <if test="name != null">
+                name = #{name},
+            </if>
+            <if test="descr != null">
+                descr = #{descr},
+            </if>
+            <if test="cover != null">
+                cover = #{cover},
+            </if>
+            <if test="money != null">
+                money = #{money},
+            </if>
+            <if test="doctorId != null">
+                doctor_id = #{doctorId},
+            </if>
+            <if test="address != null">
+                address = #{address},
+            </if>
+            <if test="examinations != null">
+                examinations = #{examinations},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+</mapper>
