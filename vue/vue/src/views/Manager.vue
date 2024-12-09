@@ -1,4 +1,5 @@
 <template>
+  <!--头部-->
   <div class="manager-container">
 
     <div id="app">
@@ -124,8 +125,6 @@ import { reactive } from "vue";
 import router from "@/router/index.js";
 import {ElMessage} from "element-plus";
 import TimeTooltip from '@/views/manager/TimeTooltip.vue';
-
-
 
 const data = reactive({
   user: JSON.parse(localStorage.getItem('xm-user') || '{}')
