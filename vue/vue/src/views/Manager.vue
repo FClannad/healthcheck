@@ -88,7 +88,7 @@
             <template #title>
               <el-icon><Menu /></el-icon>
               <span style="color: black">用户管理</span>
-            </template>
+            </template> 
             <el-menu-item index="/manager/admin" >管理员信息</el-menu-item>
             <el-menu-item index="/manager/user">用户个人信息</el-menu-item>
             <el-menu-item index="/manager/doctor">医生信息</el-menu-item>
