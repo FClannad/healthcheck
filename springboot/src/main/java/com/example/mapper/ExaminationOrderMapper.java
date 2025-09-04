@@ -28,9 +28,50 @@ public interface ExaminationOrderMapper {
                                                        @Param("examinationId") Integer examinationId,
                                                        @Param("orderType") String orderType,
                                                        @Param("userId") Integer userId);
-
-
-
     @Select("select * from `examination_order` where doctor_id = #{doctorId} and status = '待检查'")
     List<ExaminationOrder> selectPrepareOrders(Integer doctorId);
+
+    // 缓存预热相关查询方法
+    
+    /**
+     * 查询最近N天的订单（用于缓存预热）
+     */
+    @Select("select * from `examination_order` where create_time >= DATE_SUB(NOW(), INTERVAL #{days} DAY) order by create_time desc limit 100")
+    List<ExaminationOrder> selectRecentOrders(@Param("days") int days);
+
+    /**
+     * 查询待处理的订单（医生端常查询）
+     */
+    @Select("select * from `examination_order` where status in ('待审批', '已审批', '待上传报告') order by create_time desc limit 50")
+    List<ExaminationOrder> selectPendingOrders();
+
+    /**
+     * 查询明天有预约的订单
+     */
+    @Select("select * from `examination_order` where reserve_date = DATE_FORMAT(DATE_ADD(NOW(), INTERVAL 1 DAY), '%Y-%m-%d')")
+    List<ExaminationOrder> selectTomorrowOrders();
+
+    /**
+     * 获取今日订单数量
+     */
+    @Select("select count(*) from `examination_order` where DATE(create_time) = CURDATE()")
+    Integer getTodayOrderCount();
+
+    /**
+     * 获取本月订单数量
+     */
+    @Select("select count(*) from `examination_order` where DATE_FORMAT(create_time, '%Y-%m') = DATE_FORMAT(NOW(), '%Y-%m')")
+    Integer getMonthOrderCount();
+
+    /**
+     * 按状态统计订单数量
+     */
+    @Select("select count(*) from `examination_order` where status = #{status}")
+    Integer getOrderCountByStatus(@Param("status") String status);
+
+    /**
+     * 获取医生工作负载统计
+     */
+    @Select("select doctor_id, count(*) as order_count from `examination_order` where status in ('待审批', '已审批', '待上传报告') group by doctor_id")
+    List<Object[]> getDoctorWorkloadStats();
 }

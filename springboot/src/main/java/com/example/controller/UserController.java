@@ -8,6 +8,8 @@ import jakarta.annotation.Resource;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
+import java.util.HashMap;
 
 /**
  * 前端请求接口
@@ -19,6 +21,9 @@ public class UserController {
     @Resource
     private UserService userService;
 
+    @Resource
+    private com.example.service.UserBulkService userBulkService;
+
     /**
      * 新增
      */
@@ -26,6 +31,34 @@ public class UserController {
     public Result add(@RequestBody User user) {
         userService.add(user);
         return Result.success();
+    }
+
+    /**
+     * 批量加载模拟用户数据（性能测试）
+     * 示例：POST /user/bulk-load {"count":100000, "mode":"batch", "batchSize":1000}
+     * mode: single | batch
+     */
+    @PostMapping("/bulk-load")
+    public Result bulkLoad(@RequestBody Map<String, Object> req) {
+        int count = ((Number) req.getOrDefault("count", 10000)).intValue();
+        String mode = String.valueOf(req.getOrDefault("mode", "batch"));
+        int batchSize = ((Number) req.getOrDefault("batchSize", 1000)).intValue();
+
+        List<User> users = userBulkService.generateUsers(count);
+        com.example.service.UserBulkService.BulkResult r;
+        if ("single".equalsIgnoreCase(mode)) {
+            r = userBulkService.insertSingle(users);
+        } else {
+            r = userBulkService.insertBatch(users, batchSize);
+        }
+        Map<String, Object> data = new HashMap<>();
+        data.put("requested", r.requested);
+        data.put("inserted", r.inserted);
+        data.put("millis", r.millis);
+        data.put("mode", r.mode);
+        data.put("batchSize", r.batchSize);
+        data.put("tps", r.millis > 0 ? (r.inserted * 1000.0 / r.millis) : null);
+        return Result.success(data);
     }
 
     /**

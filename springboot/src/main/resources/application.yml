@@ -3,11 +3,43 @@ server:
 
 # 数据库配置
 spring:
+  main:
+    allow-circular-references: true # 临时允许循环引用
+    allow-bean-definition-overriding: true # 允许Bean覆盖
+  cloud:
+    config:
+      enabled: false
+      import-check:
+        enabled: false
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     username: root
     password: 2004
-    url: jdbc:mysql://localhost:3306/xm_health_check?useUnicode=true&characterEncoding=utf-8&allowMultiQueries=true&useSSL=false&serverTimezone=GMT%2b8&allowPublicKeyRetrieval=true
+    url: jdbc:mysql://localhost:3306/xm_health_check?useUnicode=true&characterEncoding=utf-8&rewriteBatchedStatements=true&useServerPrepStmts=true&cachePrepStmts=true&prepStmtCacheSize=250&useSSL=false&allowPublicKeyRetrieval=true
+    # HikariCP连接池优化配置
+    hikari:
+      # 连接池名称
+      pool-name: MedicalLiteraturePool
+      # 最小空闲连接数
+      minimum-idle: 5
+      # 最大连接池大小
+      maximum-pool-size: 20
+      # 连接超时时间(毫秒)
+      connection-timeout: 30000
+      # 空闲连接超时时间(毫秒)
+      idle-timeout: 600000
+      # 连接最大生命周期(毫秒)
+      max-lifetime: 1800000
+      # 连接测试查询
+      connection-test-query: SELECT 1
+      # 自动提交
+      auto-commit: true
+      # 连接泄漏检测阈值(毫秒)
+      leak-detection-threshold: 60000
+
+  # 缓存配置 - 使用简单的内存缓存
+  cache:
+    type: simple
 
 # 配置mybatis实体和xml映射
 mybatis:
@@ -17,3 +49,41 @@ mybatis:
   mapper-locations: classpath:mapper/*.xml
 
 fileBaseUrl: http://localhost:${server.port}
+
+# 爬虫配置 - 优化性能配置
+crawler:
+  enabled: true
+  sources: ["arxiv", "pubmed", "biorxiv", "mock"]  # 包含所有可用数据源
+  max-per-source: 20  # 增加每个源的最大抓取数量
+  classify-enabled: false  # 暂时禁用分类功能
+  parallel: true  # 启用并行处理提升性能
+  timeout: 30000  # 请求超时时间(毫秒)
+  retry-count: 3  # 重试次数
+  request-timeout-ms: 30000  # 增加超时时间以适应真实API
+  retry-attempts: 3
+  retry-delay-ms: 2000
+  source-configs:
+    mock:
+      api-url: ""
+      enabled: true
+      max-results: 5
+    arxiv:
+      api-url: "https://export.arxiv.org/api/query"
+      enabled: true
+      max-results: 10
+    biorxiv:
+      api-url: "https://api.biorxiv.org/details/biorxiv"
+      enabled: true
+      max-results: 5
+    pubmed:
+      api-url: "https://eutils.ncbi.nlm.nih.gov/entrez/eutils"
+      enabled: true
+      max-results: 10
+    ieee:
+      api-url: ""
+      enabled: false
+      max-results: 5
+
+logging:
+  level:
+    com.example.crawler: DEBUG
