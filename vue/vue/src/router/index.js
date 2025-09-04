@@ -31,6 +31,8 @@ const router = createRouter({
         { path: 'calendar', meta: { name: '日程安排' }, component: () => import('@/views/manager/Calendar.vue'), },
         { path: 'brief', meta: { name: '简介' }, component: () => import('@/views/manager/Brief.vue'), },
         { path: 'dataAnalysis', meta: { name: '数据' }, component: () => import('@/views/manager/DataAnalysis.vue'), },
+        { path: 'medicalLiterature', meta: { name: '医疗文献管理' }, component: () => import('@/views/manager/MedicalLiterature.vue'), },
+        { path: 'crawlerManagement', meta: { name: '爬虫管理中心' }, component: () => import('@/views/manager/CrawlerManagement.vue'), },
       ]
     },
     {
@@ -38,7 +40,8 @@ const router = createRouter({
       component: () => import('@/views/Front.vue'),
       children: [
         { path: 'home', component: () => import('@/views/front/Home.vue'),  },
-        { path: 'person', component: () => import('@/views/front/Person.vue'),  }
+        { path: 'person', component: () => import('@/views/front/Person.vue'),  },
+        { path: 'literature', meta: { name: '医疗文献' }, component: () => import('@/views/front/MedicalLiterature.vue') }
       ]
     },
     { path: '/login', component: () => import('@/views/Login.vue') },

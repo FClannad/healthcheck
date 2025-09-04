@@ -9,7 +9,7 @@
     <el-header class="manager-header" >
       <div class="manager-header-left">
         <img src="@/assets/imgs/logo.jpeg" class="logo">
-        <div class="title" style="color: #222b40">体检管理系统</div>
+        <div class="title" style="color: #222b40">医疗管理系统</div>
       </div>
       <div class="manager-header-center" >
         <el-menu :default-active="router.currentRoute.value.path"
@@ -71,6 +71,7 @@
             <el-menu-item index="/manager/physicalExamination">体检项目</el-menu-item>
             <el-menu-item index="/manager/examinationPackage">套餐体检项目</el-menu-item>
             <el-menu-item index="/manager/information">健康小知识</el-menu-item>
+            <el-menu-item index="/manager/medicalLiterature">医疗文献管理</el-menu-item>
           </el-sub-menu>
 
           <el-sub-menu v-if="data.user.role === 'ADMIN'" index="2"  style="border: none; background-color: transparent; height: 50px">
@@ -114,7 +115,7 @@
 
     <div style="display: flex">
       <div class="manager-main-right" style="background-color: #fff; padding: 10px; flex-grow: 1;">
-        <RouterView @updateUser="updateUse" />
+        <RouterView @updateUser="updateUser" />
       </div>
     </div>
   </div>
@@ -226,7 +227,7 @@ if (!data.user.id) {
 
 @media (max-width: 768px) {
   .logo {
-    width: 50px;
+    width: 60px;
     height: 50px;
   }
   .title {

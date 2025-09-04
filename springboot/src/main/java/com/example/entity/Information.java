@@ -37,7 +37,6 @@ public class Information {
     }
 
 
-
     public Integer getId() {
         return id;
     }
@@ -77,7 +76,5 @@ public class Information {
     public void setPublishTime(String publishTime) {
         this.publishTime = publishTime;
     }
-
-
 
 }

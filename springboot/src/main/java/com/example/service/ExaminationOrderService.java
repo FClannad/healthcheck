@@ -11,20 +11,31 @@ import com.example.entity.PhysicalExamination;
 import com.example.exception.CustomException;
 import com.example.mapper.ExaminationOrderMapper;
 import com.example.utils.TokenUtils;
+import com.example.utils.RedisUtils;
+import com.example.utils.RedisDistributedLock;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import jakarta.annotation.Resource;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 /**
  * 业务层方法
  */
 @Service
 public class ExaminationOrderService {
+
+    private static final Logger logger = LoggerFactory.getLogger(ExaminationOrderService.class);
 
     @Resource
     private ExaminationOrderMapper examinationOrderMapper;
@@ -34,6 +45,9 @@ public class ExaminationOrderService {
 
     @Resource
     private ExaminationPackageService examinationPackageService;
+
+    @Autowired
+    private RedisUtils redisUtils;
 
     public void add(ExaminationOrder examinationOrder) {
         examinationOrder.setCreateTime(DateUtil.now());
@@ -61,7 +75,6 @@ public class ExaminationOrderService {
             ExaminationPackage examinationPackage = examinationPackageService.selectById(examinationId);
             examinationOrder.setMoney(examinationPackage.getMoney());
             examinationOrder.setDoctorId(examinationPackage.getDoctorId());
-
         }
         Date date = new Date();
         String orderNo = DateUtil.format(date, "yyyyMMdd") + date.getTime();  // 唯一的订单号
@@ -70,14 +83,13 @@ public class ExaminationOrderService {
         examinationOrderMapper.insert(examinationOrder);
     }
 
+    @CachePut(value = "examinationOrders", key = "#examinationOrder.id")
+    @CacheEvict(value = "examinationOrdersPage", allEntries = true)
     public void updateById(ExaminationOrder examinationOrder) {
-        if("待上传报告".equals(examinationOrder.getStatus()))
-        {
-            examinationOrder.setCheckTime(DateUtil.now());
-        }
         examinationOrderMapper.updateById(examinationOrder);
     }
 
+    @CacheEvict(value = {"examinationOrders", "examinationOrdersPage"}, key = "#id", allEntries = true)
     public void deleteById(Integer id) {
         examinationOrderMapper.deleteById(id);
     }
@@ -88,6 +100,7 @@ public class ExaminationOrderService {
         }
     }
 
+    @Cacheable(value = "examinationOrders", key = "#id")
     public ExaminationOrder selectById(Integer id) {
         return examinationOrderMapper.selectById(id);
     }
@@ -106,16 +119,29 @@ public class ExaminationOrderService {
         }
         PageHelper.startPage(pageNum, pageSize);
         List<ExaminationOrder> list = examinationOrderMapper.selectAll(examinationOrder);
+        logger.info("Found {} examination orders for page {}", list.size(), pageNum);
+        
         for (ExaminationOrder order : list) {
             List<PhysicalExamination> examinationList = new ArrayList<>();
             if (order.getOrderType().equals("套餐体检")) {
                 Integer examinationId = order.getExaminationId();  // 套餐体检项目ID
                 // 查询套餐体检  包含的普通体检项目列表
-                ExaminationPackage examinationPackage = examinationPackageService.selectById(examinationId);
-                JSONArray examinationIds = JSONUtil.parseArray(examinationPackage.getExaminations());
-                for (Object physicalExaminationId : examinationIds) {
-                    PhysicalExamination physicalExamination = physicalExaminationService.selectById((Integer) physicalExaminationId);// 查询普通体检的信息
-                    examinationList.add(physicalExamination);
+                try {
+                    ExaminationPackage examinationPackage = examinationPackageService.selectById(examinationId);
+                    if (examinationPackage != null && examinationPackage.getExaminations() != null) {
+                        logger.debug("Processing package examination: {} for order: {}", examinationPackage.getName(), order.getOrderNo());
+                        JSONArray examinationIds = JSONUtil.parseArray(examinationPackage.getExaminations());
+                        for (Object physicalExaminationId : examinationIds) {
+                            PhysicalExamination physicalExamination = physicalExaminationService.selectById((Integer) physicalExaminationId);// 查询普通体检的信息
+                            if (physicalExamination != null) {
+                                examinationList.add(physicalExamination);
+                            }
+                        }
+                    } else {
+                        logger.warn("Examination package is null or has no examinations for ID: {}", examinationId);
+                    }
+                } catch (Exception e) {
+                    logger.error("Error processing examination package for order: {}, packageId: {}", order.getOrderNo(), examinationId, e);
                 }
             }
             // 再设置到 order里面

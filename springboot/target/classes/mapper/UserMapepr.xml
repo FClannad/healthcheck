@@ -40,6 +40,15 @@
         </trim>
     </insert>
 
+    <!-- 批量插入：多VALUES写法以触发JDBC批处理 -->
+    <insert id="batchInsert">
+        insert into `user` (username, password, name, phone, email, avatar, role)
+        values
+        <foreach collection="users" item="u" separator=",">
+            (#{u.username}, #{u.password}, #{u.name}, #{u.phone}, #{u.email}, #{u.avatar}, #{u.role})
+        </foreach>
+    </insert>
+
     <update id="updateById" parameterType="com.example.entity.User">
         update `user`
         <set>

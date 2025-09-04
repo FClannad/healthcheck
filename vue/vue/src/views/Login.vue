@@ -6,7 +6,7 @@
       <div class="container">
         <div class="drop">
           <div class="content">
-            <h2 :style="{ color: '#00000' }" >体检管理系统</h2>
+            <h2 :style="{ color: '#00000' }" >医疗管理系统</h2>
             <el-form ref="formRef" :model="data.form" :rules="data.rules">
               <div class="inputBox" >
                 <el-input :prefix-icon="User" size="large" v-model="data.form.username" placeholder="输入账号"></el-input>

@@ -9,6 +9,9 @@ public interface UserMapper {
 
     int insert(User user);
 
+    // 批量插入（多值VALUES）
+    int batchInsert(@org.apache.ibatis.annotations.Param("users") List<User> users);
+
     void updateById(User user);
 
     void deleteById(Integer id);
