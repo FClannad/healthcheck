@@ -37,9 +37,51 @@ spring:
       # 连接泄漏检测阈值(毫秒)
       leak-detection-threshold: 60000
 
-  # 缓存配置 - 使用简单的内存缓存
+  # Redis配置
+  data:
+    redis:
+      host: localhost
+      port: 6379
+      password: # 如果Redis设置了密码，请填写
+      database: 0
+      timeout: 3000ms
+      lettuce:
+        pool:
+          max-active: 8
+          max-idle: 8
+          min-idle: 0
+          max-wait: -1ms
+
+  # RabbitMQ配置
+  rabbitmq:
+    enabled: true  # 启用RabbitMQ
+    host: localhost
+    port: 5672
+    username: guest
+    password: guest
+    virtual-host: /
+    connection-timeout: 15000
+    listener:
+      simple:
+        acknowledge-mode: manual # 手动确认
+        retry:
+          enabled: true
+          max-attempts: 3
+        default-requeue-rejected: false
+        prefetch: 1
+    publisher-confirms: true
+    publisher-returns: true
+    template:
+      retry:
+        enabled: true
+        initial-interval: 1000
+        max-attempts: 3
+
+  # 缓存配置
   cache:
-    type: simple
+    type: redis
+    redis:
+      time-to-live: 1800000 # 30分钟过期
 
 # 配置mybatis实体和xml映射
 mybatis:
