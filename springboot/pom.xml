@@ -66,7 +66,17 @@
             <version>4.3.0</version>
         </dependency>
 
-        <!-- 移除Redis和RabbitMQ依赖，使用简单内存缓存 -->
+        <!-- Redis 缓存 -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-redis</artifactId>
+        </dependency>
+
+        <!-- RabbitMQ 消息队列 -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-amqp</artifactId>
+        </dependency>
 
         <!-- 对象序列化 (已包含在spring-boot-starter中) -->
 
