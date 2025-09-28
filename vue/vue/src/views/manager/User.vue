@@ -185,3 +185,7 @@ const reset = () => {
 
 load()
 </script>
+
+<style scoped>
+@import '@/assets/styles/pages/user-management.css';
+</style>

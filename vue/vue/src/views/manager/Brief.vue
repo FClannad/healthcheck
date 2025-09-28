@@ -1,241 +1,634 @@
 <template>
-  <div class="hospital-intro">
-    <!-- 轮播图部分 -->
-    <el-card class="carousel-card">
-      <el-carousel interval="4000" height="600px" width="400px"  >
-        <el-carousel-item v-for="item in carouselList" :key="item.id">
-          <img :src="item.image" alt="轮播图" style="width: 100%; height: 100%; opacity:1;">
-        </el-carousel-item>
-      </el-carousel>
-    </el-card>
-
-    <!-- 医院概况 -->
-    <section class="hospital-overview">
-      <h2>医院概况</h2>
-      <p>成立于2005年的XX医院，是一所综合性的三级甲等医院，拥有超过1000张床位，涵盖了内科、外科、妇产科、儿科等多个学科领域。医院致力于为患者提供高质量的医疗服务，已经成为本地区领先的医疗机构。</p>
-    </section>
-
-    <!-- 医疗团队 -->
-    <section class="medical-team">
-      <h2 ><a>我们的医疗团队</a></h2>
-      <p>XX医院拥有一支由国内外知名专家组成的医疗团队，医院的主治医生和专科医师具有丰富的临床经验，并且多次获得国内外医疗奖项。我们的医疗团队致力于为患者提供科学、专业和人性化的医疗服务。</p>
-
-    </section>
-
-    <!-- 技术设备 -->
-    <section class="technology-equipment">
-      <h2>先进的医疗设备</h2>
-      <p>为了确保诊疗的准确性和高效性，XX医院配备了多台世界顶级医疗设备，包括MRI、CT、超声波检查仪、机器人手术系统等。我们不断引进和升级设备，以满足日益增长的医疗需求。</p>
-      <img src="@/assets/imgs/equipent.png" style="width: 80%" alt="Medical Equipment">
-    </section>
-
-    <!-- 服务项目 -->
-    <section class="services">
-      <h2>我们提供的服务</h2>
-      <div class="service-list">
-        <div class="service-item"  >
-          <h3  :to="{ path: '/manager/doctor'}" >先进的医疗团队</h3>
-          <p>我们提供各类门诊服务，涵盖多个科室的医生，包括内科、外科、妇产科、牙科等。</p>
-        </div>
-        <div class="service-item">
-          <h3>体检预约服务</h3>
-          <p>医院设有多个病区，提供舒适、专业的住院环境，全天候护理服务。可以随时进行体检预约</p>
-        </div>
-        <div class="service-item">
-          <h3>体检套餐服务</h3>
-          <p>提供各类的体检套餐。</p>
-        </div>
-        <div class="service-item">
-          <h3>健康科普服务</h3>
-          <p>为市民提供全方位的健康检查服务，早期筛查，预防疾病。</p>
+  <div class="medical-platform">
+    <!-- 顶部介绍区域 -->
+    <section class="hero-section">
+      <div class="container">
+        <div class="hero-content">
+          <h1 class="hero-title">智慧医疗健康管理平台</h1>
+          <p class="hero-subtitle">基于人工智能和大数据技术的综合性医疗信息化平台</p>
+          <p class="hero-description">
+            为医疗机构、医生和患者提供全方位的智慧医疗服务，推动医疗行业的数字化转型，
+            提升医疗质量和效率，构建智慧医疗新生态。
+          </p>
+          <div class="hero-stats">
+            <div class="stat-item">
+              <div class="stat-number">500+</div>
+              <div class="stat-label">合作医院</div>
+            </div>
+            <div class="stat-item">
+              <div class="stat-number">10万+</div>
+              <div class="stat-label">医生用户</div>
+            </div>
+            <div class="stat-item">
+              <div class="stat-number">99.9%</div>
+              <div class="stat-label">系统稳定性</div>
+            </div>
+          </div>
         </div>
       </div>
     </section>
 
-    <!-- 医院文化 -->
-    <section class="hospital-culture">
-      <img src="@/assets/imgs/cu.jpeg" style="width: 80%; height: 700px" >
-      <h2>医院文化</h2>
-      <p>“关爱每一位患者，打造最专业的医疗服务”，这是我们始终秉承的服务理念。我们注重患者的体验，致力于营造温馨、舒适的就医环境，所有工作人员都以高度的责任心和同理心为患者提供最好的医疗服务。</p>
+    <!-- 核心功能模块 -->
+    <section class="features-section">
+      <div class="container">
+        <div class="section-header">
+          <h2 class="section-title">核心功能模块</h2>
+          <p class="section-subtitle">四大智能模块，构建完整医疗生态系统</p>
+        </div>
+        <div class="features-grid">
+          <div class="feature-card" v-for="feature in features" :key="feature.id">
+            <div class="feature-icon">
+              <component :is="feature.icon" />
+            </div>
+            <h3 class="feature-title">{{ feature.title }}</h3>
+            <p class="feature-description">{{ feature.description }}</p>
+            <div class="feature-tags">
+              <span v-for="tag in feature.tags" :key="tag" class="feature-tag">{{ tag }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
     </section>
 
-    <!-- 患者体验 -->
-    <section class="patient-experience">
-      <img src="@/assets/imgs/listen.jpeg" style="width: 80%; height: 700px" >
-      <h2>患者的声音</h2>
-      <p>我们的患者常常表示，在XX医院的就医体验非常好，服务细致、医疗质量高，医院环境温馨舒适。许多患者选择我们作为长期的就医基地，并且通过口碑推荐给身边的朋友。</p>
+    <!-- 技术架构 -->
+    <section class="tech-section">
+      <div class="container">
+        <div class="section-header">
+          <h2 class="section-title">技术架构</h2>
+          <p class="section-subtitle">基于现代化技术栈，确保系统高性能和可扩展性</p>
+        </div>
+        <div class="tech-grid">
+          <div class="tech-category">
+            <h4 class="tech-title">前端技术</h4>
+            <div class="tech-tags">
+              <span class="tech-tag">Vue 3</span>
+              <span class="tech-tag">Element Plus</span>
+              <span class="tech-tag">TypeScript</span>
+              <span class="tech-tag">Vite</span>
+            </div>
+          </div>
+          <div class="tech-category">
+            <h4 class="tech-title">后端服务</h4>
+            <div class="tech-tags">
+              <span class="tech-tag">Spring Boot</span>
+              <span class="tech-tag">MyBatis Plus</span>
+              <span class="tech-tag">Redis</span>
+              <span class="tech-tag">RabbitMQ</span>
+            </div>
+          </div>
+          <div class="tech-category">
+            <h4 class="tech-title">AI技术</h4>
+            <div class="tech-tags">
+              <span class="tech-tag">机器学习</span>
+              <span class="tech-tag">自然语言处理</span>
+              <span class="tech-tag">知识图谱</span>
+              <span class="tech-tag">深度学习</span>
+            </div>
+          </div>
+          <div class="tech-category">
+            <h4 class="tech-title">基础设施</h4>
+            <div class="tech-tags">
+              <span class="tech-tag">Docker</span>
+              <span class="tech-tag">Kubernetes</span>
+              <span class="tech-tag">MySQL</span>
+              <span class="tech-tag">Elasticsearch</span>
+            </div>
+          </div>
+        </div>
+      </div>
     </section>
 
-    <!-- 科研与教育 -->
-    <section class="research-education">
-      <img src="@/assets/imgs/edu.jpeg" style="width: 80%; height: 700px" >
-      <h2>科研与教育</h2>
-      <p>XX医院不仅注重医疗服务，还积极推动医学科研和临床实践的结合。我们与多所知名高校和科研机构合作，推动医学研究，培养医学人才。</p>
+    <!-- 平台优势 -->
+    <section class="advantages-section">
+      <div class="container">
+        <div class="section-header">
+          <h2 class="section-title">平台优势</h2>
+          <p class="section-subtitle">专业、智能、安全、高效的医疗信息化解决方案</p>
+        </div>
+        <div class="advantages-grid">
+          <div class="advantage-card" v-for="advantage in advantages" :key="advantage.id">
+            <div class="advantage-icon">
+              <component :is="advantage.icon" />
+            </div>
+            <h4 class="advantage-title">{{ advantage.title }}</h4>
+            <p class="advantage-description">{{ advantage.description }}</p>
+          </div>
+        </div>
+      </div>
     </section>
 
-    <!-- 社区服务与公益 -->
-    <section class="community-service">
-      <img src="@/assets/imgs/shequ.jpeg" style="width: 80%; height: 700px" >
-      <h2>社区服务与公益</h2>
-      <p>作为本地区的医疗龙头企业，XX医院积极开展公益活动，如免费义诊、健康讲座等。我们致力于提升社区居民的健康水平，打造更和谐的社会。</p>
+    <!-- 应用场景 -->
+    <section class="scenarios-section">
+      <div class="container">
+        <div class="section-header">
+          <h2 class="section-title">应用场景</h2>
+          <p class="section-subtitle">广泛适用于各类医疗机构，助力医疗行业数字化转型</p>
+        </div>
+        <div class="scenarios-grid">
+          <div class="scenario-card" v-for="scenario in scenarios" :key="scenario.id">
+            <h4 class="scenario-title">{{ scenario.title }}</h4>
+            <p class="scenario-description">{{ scenario.description }}</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 联系我们 -->
+    <section class="contact-section">
+      <div class="container">
+        <div class="contact-content">
+          <h2 class="contact-title">开启智慧医疗新时代</h2>
+          <p class="contact-subtitle">让我们一起推动医疗行业的数字化转型</p>
+          <div class="contact-actions">
+            <el-button type="primary" size="large" @click="handleDemo">
+              <el-icon><VideoPlay /></el-icon>
+              观看演示
+            </el-button>
+            <el-button size="large" @click="handleContact">
+              <el-icon><Phone /></el-icon>
+              联系我们
+            </el-button>
+          </div>
+        </div>
+      </div>
     </section>
   </div>
-
 </template>
 
-<script>
-import Carousel from '@chenfengyuan/vue-carousel';
-import Slide from '@chenfengyuan/vue-carousel';
+<script setup>
+import { reactive } from 'vue'
+import { 
+  Document, 
+  DataAnalysis, 
+  Monitor, 
+  Connection,
+  VideoPlay,
+  Phone,
+  Lock,
+  Star,
+  Setting
+} from '@element-plus/icons-vue'
+import { ElMessage } from 'element-plus'
 
-import image1 from '@/assets/imgs/haibao1.png'
-import image2 from '@/assets/imgs/haibao2.png'
-import image3 from '@/assets/imgs/jing.jpg'
-
-import router from "@/router/index.js";
-
-export default {
-  components: {
-    Carousel,
-    Slide
+// 核心功能数据
+const features = reactive([
+  {
+    id: 1,
+    icon: Document,
+    title: '医疗文献管理',
+    description: '智能化的医疗文献检索、分类和管理系统，支持多语言文献处理和知识图谱构建。',
+    tags: ['智能检索', '自动分类', '知识图谱']
   },
-  data() {
-    return {
-      carouselList: [
-        { id: 1, image: image1 },
-        { id: 2, image: image2 },
-        { id: 3, image: image3 }
-      ],
+  {
+    id: 2,
+    icon: DataAnalysis,
+    title: '健康数据分析',
+    description: '基于大数据和AI算法的健康数据深度分析，提供个性化健康评估和风险预测。',
+    tags: ['大数据', '风险预测', '个性化']
+  },
+  {
+    id: 3,
+    icon: Monitor,
+    title: '智能诊疗辅助',
+    description: 'AI驱动的诊断辅助系统，为医生提供精准的诊断建议和治疗方案推荐。',
+    tags: ['AI诊断', '治疗推荐', '临床决策']
+  },
+  {
+    id: 4,
+    icon: Connection,
+    title: '医疗资源调度',
+    description: '智能化的医疗资源管理和调度系统，优化医院运营效率和资源配置。',
+    tags: ['智能排班', '资源优化', '效率提升']
+  }
+])
 
-    };
+// 平台优势数据
+const advantages = reactive([
+  {
+    id: 1,
+    icon: Lock,
+    title: '安全可靠',
+    description: '采用多层安全防护，确保医疗数据的安全性和隐私保护。'
+  },
+  {
+    id: 2,
+    icon: Star,
+    title: '高效智能',
+    description: 'AI算法驱动，自动化处理，大幅提升医疗工作效率。'
+  },
+  {
+    id: 3,
+    icon: Star,
+    title: '专业精准',
+    description: '基于医学专业知识，提供精准的诊疗辅助和决策支持。'
+  },
+  {
+    id: 4,
+    icon: Setting,
+    title: '灵活扩展',
+    description: '模块化设计，支持个性化定制和功能扩展。'
+  }
+])
+
+// 应用场景数据
+const scenarios = reactive([
+  {
+    id: 1,
+    title: '三甲医院',
+    description: '为大型综合医院提供全面的智慧化解决方案，提升医疗服务质量和管理效率。'
+  },
+  {
+    id: 2,
+    title: '专科医院',
+    description: '针对专科医院的特殊需求，提供定制化的专业医疗信息系统。'
+  },
+  {
+    id: 3,
+    title: '社区医院',
+    description: '帮助社区医院实现数字化转型，提升基层医疗服务能力。'
+  },
+  {
+    id: 4,
+    title: '医疗集团',
+    description: '为医疗集团提供统一的信息化平台，实现资源共享和协同管理。'
+  }
+])
+
+// 演示功能
+const handleDemo = () => {
+  ElMessage.info('演示功能开发中...')
 }
 
-};
-
-const ToDoctor = () => {
-  router.push({ path: '/doctor' });
+// 联系我们
+const handleContact = () => {
+  ElMessage.info('联系方式：400-123-4567')
 }
-
-
 </script>
 
 <style scoped>
-
-p{
-  width: 100%;
+.medical-platform {
+  background: #ffffff;
+  min-height: 100vh;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
 }
 
-.hospital-intro {
-  background: url("@/assets/imgs/background3.jpg") no-repeat center center; /* 设置背景图 */
-  background-size: cover; /* 背景图像覆盖整个区域 */
-  position: relative; /* 设置相对定位，以便给子元素提供定位参考 */
-  z-index: 0; /* 确保背景图位于底层 */
-  font-family: 'Arial', sans-serif;
-  margin: 0;
-  padding: 0;
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
 }
 
-.hospital-intro::before {
-  content: ''; /* 使用伪元素创建遮罩 */
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: rgba(0, 0, 0, 0.4); /* 半透明的黑色遮罩层 */
-  z-index: -1; /* 确保遮罩层位于背景图下方但在内容上方 */
+/* 顶部介绍区域 */
+.hero-section {
+  background: linear-gradient(135deg, #1890ff 0%, #52c41a 100%);
+  color: white;
+  padding: 80px 0;
+  text-align: center;
 }
 
-h2, p {
-  color: #fff; /* 文字颜色为白色，以提高对比度 */
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.6); /* 添加文字阴影增强可读性 */
-}
-
-.carousel-card {
-  height: 100%;
-  margin-bottom: 0px;
-}
-
-.carousel-container {
+.hero-content {
   max-width: 800px;
   margin: 0 auto;
 }
 
-.carousel-container img {
-  width: 100%;
-  height: auto;
+.hero-title {
+  font-size: 42px;
+  font-weight: 700;
+  margin-bottom: 20px;
+  line-height: 1.2;
 }
 
-section {
-  padding: 40px 20px;
+.hero-subtitle {
+  font-size: 20px;
+  margin-bottom: 20px;
+  opacity: 0.9;
+  font-weight: 500;
+}
+
+.hero-description {
+  font-size: 16px;
+  line-height: 1.6;
+  margin-bottom: 40px;
+  opacity: 0.8;
+}
+
+.hero-stats {
+  display: flex;
+  justify-content: center;
+  gap: 60px;
+  margin-top: 40px;
+}
+
+.stat-item {
   text-align: center;
-  background-color: transparent; /* 确保文字框背景透明 */
-  margin-bottom: 20px;
-  border-radius: 8px;
-  position: relative;
-  z-index: 1; /* 确保文字内容位于背景图之上 */
 }
 
-h2 {
-  font-size: 28px;
-  color: #fff; /* 文字颜色为白色 */
+.stat-number {
+  font-size: 36px;
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+
+.stat-label {
+  font-size: 14px;
+  opacity: 0.8;
+}
+
+/* 通用样式 */
+.section-header {
+  text-align: center;
+  margin-bottom: 60px;
+}
+
+.section-title {
+  font-size: 32px;
+  font-weight: 700;
+  color: #2c3e50;
+  margin-bottom: 16px;
+}
+
+.section-subtitle {
+  font-size: 16px;
+  color: #7f8c8d;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+/* 功能模块 */
+.features-section {
+  padding: 80px 0;
+  background: #f8f9fa;
+}
+
+.features-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 30px;
+}
+
+.feature-card {
+  background: white;
+  border-radius: 12px;
+  padding: 30px;
+  text-align: center;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+}
+
+.feature-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+}
+
+.feature-icon {
+  width: 60px;
+  height: 60px;
+  background: linear-gradient(135deg, #1890ff, #52c41a);
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 20px;
+  color: white;
+  font-size: 24px;
+}
+
+.feature-title {
+  font-size: 20px;
+  font-weight: 600;
+  color: #2c3e50;
+  margin-bottom: 12px;
+}
+
+.feature-description {
+  font-size: 14px;
+  color: #7f8c8d;
+  line-height: 1.6;
   margin-bottom: 20px;
 }
 
-p {
-  left: 100px;
+.feature-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  justify-content: center;
+}
+
+.feature-tag {
+  background: #e8f4fd;
+  color: #1890ff;
+  padding: 4px 12px;
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+/* 技术架构 */
+.tech-section {
+  padding: 80px 0;
+  background: white;
+}
+
+.tech-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 30px;
+}
+
+.tech-category {
+  background: #f8f9fa;
+  border-radius: 12px;
+  padding: 30px;
+  text-align: center;
+}
+
+.tech-title {
   font-size: 18px;
-  color: #fff; /* 文字颜色为白色 */
+  font-weight: 600;
+  color: #2c3e50;
+  margin-bottom: 20px;
+}
+
+.tech-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  justify-content: center;
+}
+
+.tech-tag {
+  background: white;
+  color: #7f8c8d;
+  padding: 6px 12px;
+  border-radius: 16px;
+  font-size: 12px;
+  font-weight: 500;
+  border: 1px solid #e9ecef;
+  transition: all 0.3s ease;
+}
+
+.tech-tag:hover {
+  background: #1890ff;
+  color: white;
+  border-color: #1890ff;
+}
+
+/* 平台优势 */
+.advantages-section {
+  padding: 80px 0;
+  background: #f8f9fa;
+}
+
+.advantages-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 30px;
+}
+
+.advantage-card {
+  background: white;
+  border-radius: 12px;
+  padding: 30px;
+  text-align: center;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+}
+
+.advantage-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+}
+
+.advantage-icon {
+  width: 50px;
+  height: 50px;
+  background: linear-gradient(135deg, #1890ff, #52c41a);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 16px;
+  color: white;
+  font-size: 20px;
+}
+
+.advantage-title {
+  font-size: 18px;
+  font-weight: 600;
+  color: #2c3e50;
+  margin-bottom: 12px;
+}
+
+.advantage-description {
+  font-size: 14px;
+  color: #7f8c8d;
   line-height: 1.6;
 }
 
-.service-list {
+/* 应用场景 */
+.scenarios-section {
+  padding: 80px 0;
+  background: white;
+}
+
+.scenarios-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 30px;
+}
+
+.scenario-card {
+  background: #f8f9fa;
+  border-radius: 12px;
+  padding: 30px;
+  text-align: center;
+  transition: all 0.3s ease;
+}
+
+.scenario-card:hover {
+  background: #e9ecef;
+}
+
+.scenario-title {
+  font-size: 18px;
+  font-weight: 600;
+  color: #2c3e50;
+  margin-bottom: 12px;
+}
+
+.scenario-description {
+  font-size: 14px;
+  color: #7f8c8d;
+  line-height: 1.6;
+}
+
+/* 联系我们 */
+.contact-section {
+  background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+  color: white;
+  padding: 80px 0;
+  text-align: center;
+}
+
+.contact-content {
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.contact-title {
+  font-size: 32px;
+  font-weight: 700;
+  margin-bottom: 16px;
+}
+
+.contact-subtitle {
+  font-size: 16px;
+  margin-bottom: 40px;
+  opacity: 0.9;
+}
+
+.contact-actions {
   display: flex;
-  justify-content: space-around;
+  gap: 20px;
+  justify-content: center;
   flex-wrap: wrap;
 }
 
-.service-item {
-  width: 22%;
-  margin: 10px;
-  background-color: #fff;
-  padding: 20px;
-  border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-.service-item:hover {
-  transform: scale(1.05);
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
-}
-
-.service-item h3 {
-  font-size: 20px;
-  color: #333;
-  margin-bottom: 10px;
-}
-
-.service-item p {
-  font-size: 16px;
-  color: #777;
-}
-
-img {
-  max-width: 100%;
-  border-radius: 8px;
-}
-
+/* 响应式设计 */
 @media (max-width: 768px) {
-  .service-item {
-    width: 45%; /* 在小屏幕上调整为45% */
-    margin: 10px 0;
+  .hero-title {
+    font-size: 32px;
+  }
+  
+  .hero-stats {
+    gap: 30px;
+  }
+  
+  .section-title {
+    font-size: 28px;
+  }
+  
+  .features-grid,
+  .tech-grid,
+  .advantages-grid,
+  .scenarios-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .contact-actions {
+    flex-direction: column;
+    align-items: center;
   }
 }
 
 @media (max-width: 480px) {
-  .service-item {
-    width: 100%; /* 在更小的屏幕上调整为100% */
+  .hero-stats {
+    flex-direction: column;
+    gap: 20px;
+  }
+  
+  .container {
+    padding: 0 15px;
   }
 }
-
 </style>

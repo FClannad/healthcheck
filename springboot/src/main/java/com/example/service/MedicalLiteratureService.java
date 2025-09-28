@@ -369,22 +369,53 @@ public class MedicalLiteratureService {
      */
     public Map<String, Integer> getSourceStatistics() {
         Map<String, Integer> sourceStats = new HashMap<>();
-        
+
         try {
             MedicalLiterature query = new MedicalLiterature();
             List<MedicalLiterature> allLiteratures = medicalLiteratureMapper.selectAll(query);
-            
+
             // 统计各来源的文献数量
             for (MedicalLiterature literature : allLiteratures) {
                 String source = literature.getCrawlSource() != null ? literature.getCrawlSource() : "未知";
                 sourceStats.put(source, sourceStats.getOrDefault(source, 0) + 1);
             }
-            
+
         } catch (Exception e) {
             logger.error("获取来源统计失败", e);
         }
-        
+
         return sourceStats;
+    }
+
+    /**
+     * 获取今日爬取数量
+     */
+    public int getTodayCount() {
+        try {
+            return medicalLiteratureMapper.countTodayLiteratures();
+        } catch (Exception e) {
+            logger.error("获取今日爬取数量失败", e);
+            return 0;
+        }
+    }
+
+    /**
+     * 获取最近几天的文献数量
+     */
+    public int getRecentCount(int days) {
+        try {
+            MedicalLiterature query = new MedicalLiterature();
+            List<MedicalLiterature> allLiteratures = medicalLiteratureMapper.selectAll(query);
+
+            long cutoffTime = System.currentTimeMillis() - (days * 24L * 60 * 60 * 1000);
+
+            return (int) allLiteratures.stream()
+                    .filter(lit -> lit.getCreateTime() != null && lit.getCreateTime().getTime() >= cutoffTime)
+                    .count();
+        } catch (Exception e) {
+            logger.error("获取最近{}天文献数量失败", days, e);
+            return 0;
+        }
     }
 
     /**

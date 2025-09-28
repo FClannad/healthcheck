@@ -46,7 +46,7 @@ public interface MedicalLiteratureMapper {
      * 查询所有文献（支持条件查询）
      */
     @Select("<script>" +
-            "SELECT id, title, authors, journal, publish_date, abstract_content, keywords, category, source_url, crawl_source, create_time " +
+            "SELECT id, title, authors, journal, publish_date, abstract_content, keywords, source_url, crawl_source, status, create_time " +
             "FROM medical_literature " +
             "<where>" +
             "<if test='title != null and title != \"\"'>" +
@@ -61,8 +61,11 @@ public interface MedicalLiteratureMapper {
             "<if test='keywords != null and keywords != \"\"'>" +
             "AND keywords LIKE CONCAT('%', #{keywords}, '%')" +
             "</if>" +
-            "<if test='category != null and category != \"\"'>" +
-            "AND category = #{category}" +
+            "<if test='crawlSource != null and crawlSource != \"\"'>" +
+            "AND crawl_source = #{crawlSource}" +
+            "</if>" +
+            "<if test='status != null and status != \"\"'>" +
+            "AND status = #{status}" +
             "</if>" +
             "</where>" +
             "ORDER BY create_time DESC" +

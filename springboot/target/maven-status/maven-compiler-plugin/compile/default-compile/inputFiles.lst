@@ -8,7 +8,9 @@ D:\xm\xm\health\springboot\src\main\java\com\example\common\enums\ResultCodeEnum
 D:\xm\xm\health\springboot\src\main\java\com\example\common\enums\RoleEnum.java
 D:\xm\xm\health\springboot\src\main\java\com\example\common\Result.java
 D:\xm\xm\health\springboot\src\main\java\com\example\config\SwaggerConfig.java
+D:\xm\xm\health\springboot\src\main\java\com\example\config\ZhipuAiConfig.java
 D:\xm\xm\health\springboot\src\main\java\com\example\controller\AdminController.java
+D:\xm\xm\health\springboot\src\main\java\com\example\controller\AiConsultationController.java
 D:\xm\xm\health\springboot\src\main\java\com\example\controller\DataMaintenanceController.java
 D:\xm\xm\health\springboot\src\main\java\com\example\controller\DoctorController.java
 D:\xm\xm\health\springboot\src\main\java\com\example\controller\ExaminationOrderController.java
@@ -24,6 +26,7 @@ D:\xm\xm\health\springboot\src\main\java\com\example\controller\PhysicalExaminat
 D:\xm\xm\health\springboot\src\main\java\com\example\controller\StatisticsController.java
 D:\xm\xm\health\springboot\src\main\java\com\example\controller\SystemConfigController.java
 D:\xm\xm\health\springboot\src\main\java\com\example\controller\SystemMonitorController.java
+D:\xm\xm\health\springboot\src\main\java\com\example\controller\TestController.java
 D:\xm\xm\health\springboot\src\main\java\com\example\controller\TitleController.java
 D:\xm\xm\health\springboot\src\main\java\com\example\controller\UserController.java
 D:\xm\xm\health\springboot\src\main\java\com\example\controller\WebController.java
@@ -42,7 +45,10 @@ D:\xm\xm\health\springboot\src\main\java\com\example\crawler\sources\PubMedSourc
 D:\xm\xm\health\springboot\src\main\java\com\example\crawler\sources\SourceClient.java
 D:\xm\xm\health\springboot\src\main\java\com\example\entity\Account.java
 D:\xm\xm\health\springboot\src\main\java\com\example\entity\Admin.java
+D:\xm\xm\health\springboot\src\main\java\com\example\entity\AiConsultation.java
 D:\xm\xm\health\springboot\src\main\java\com\example\entity\Doctor.java
+D:\xm\xm\health\springboot\src\main\java\com\example\entity\dto\AiConsultationRequest.java
+D:\xm\xm\health\springboot\src\main\java\com\example\entity\dto\AiConsultationResponse.java
 D:\xm\xm\health\springboot\src\main\java\com\example\entity\ExaminationOrder.java
 D:\xm\xm\health\springboot\src\main\java\com\example\entity\ExaminationPackage.java
 D:\xm\xm\health\springboot\src\main\java\com\example\entity\ExaminationType.java
@@ -57,6 +63,7 @@ D:\xm\xm\health\springboot\src\main\java\com\example\entity\User.java
 D:\xm\xm\health\springboot\src\main\java\com\example\exception\CustomException.java
 D:\xm\xm\health\springboot\src\main\java\com\example\exception\GlobalExceptionHandler.java
 D:\xm\xm\health\springboot\src\main\java\com\example\mapper\AdminMapper.java
+D:\xm\xm\health\springboot\src\main\java\com\example\mapper\AiConsultationMapper.java
 D:\xm\xm\health\springboot\src\main\java\com\example\mapper\DoctorMapper.java
 D:\xm\xm\health\springboot\src\main\java\com\example\mapper\ExaminationOrderMapper.java
 D:\xm\xm\health\springboot\src\main\java\com\example\mapper\ExaminationPackageMapper.java
@@ -70,6 +77,7 @@ D:\xm\xm\health\springboot\src\main\java\com\example\mapper\PhysicalExaminationM
 D:\xm\xm\health\springboot\src\main\java\com\example\mapper\TitleMapper.java
 D:\xm\xm\health\springboot\src\main\java\com\example\mapper\UserMapper.java
 D:\xm\xm\health\springboot\src\main\java\com\example\service\AdminService.java
+D:\xm\xm\health\springboot\src\main\java\com\example\service\AiConsultationService.java
 D:\xm\xm\health\springboot\src\main\java\com\example\service\CacheService.java
 D:\xm\xm\health\springboot\src\main\java\com\example\service\CrawlerMetricsService.java
 D:\xm\xm\health\springboot\src\main\java\com\example\service\DoctorService.java
@@ -90,6 +98,7 @@ D:\xm\xm\health\springboot\src\main\java\com\example\service\SystemConfigService
 D:\xm\xm\health\springboot\src\main\java\com\example\service\TitleService.java
 D:\xm\xm\health\springboot\src\main\java\com\example\service\UserBulkService.java
 D:\xm\xm\health\springboot\src\main\java\com\example\service\UserService.java
+D:\xm\xm\health\springboot\src\main\java\com\example\service\ZhipuAiService.java
 D:\xm\xm\health\springboot\src\main\java\com\example\SpringbootApplication.java
 D:\xm\xm\health\springboot\src\main\java\com\example\util\SimilarityUtil.java
 D:\xm\xm\health\springboot\src\main\java\com\example\utils\RedisDistributedLock.java

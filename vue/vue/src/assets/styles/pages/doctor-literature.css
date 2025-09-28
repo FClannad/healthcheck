@@ -1,0 +1,410 @@
+/* ========================================
+   医疗文献页面样式
+   ======================================== */
+
+/* ==================== 页面容器 ==================== */
+
+.doctor-literature {
+  padding: 0;
+  background: var(--background-color);
+  min-height: 100vh;
+}
+
+/* ==================== 页面头部 ==================== */
+
+.doctor-header {
+  background: var(--gradient-primary);
+  padding: var(--spacing-xl) 0;
+  margin-bottom: var(--spacing-xl);
+  border-radius: 0 0 var(--border-radius-xl) var(--border-radius-xl);
+  box-shadow: var(--shadow-lg);
+}
+
+.header-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 var(--spacing-lg);
+  text-align: center;
+}
+
+.page-title {
+  font-size: var(--font-size-xxxl);
+  font-weight: var(--font-weight-bold);
+  color: var(--text-inverse);
+  margin: 0 0 var(--spacing-sm) 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-md);
+}
+
+.page-title .el-icon {
+  font-size: 2.5rem;
+}
+
+.page-subtitle {
+  font-size: var(--font-size-lg);
+  color: rgba(255, 255, 255, 0.9);
+  margin: 0;
+  font-weight: var(--font-weight-normal);
+}
+
+/* ==================== 统计卡片 ==================== */
+
+.stats-row {
+  margin-bottom: var(--spacing-xl);
+  padding: 0 var(--spacing-lg);
+}
+
+.stats-card {
+  border: none;
+  border-radius: var(--border-radius-lg);
+  box-shadow: var(--shadow-md);
+  transition: all var(--duration-normal) var(--ease-out);
+  overflow: hidden;
+  position: relative;
+}
+
+.stats-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-xl);
+}
+
+.stats-card .el-card__body {
+  padding: var(--spacing-xl);
+  position: relative;
+}
+
+.stats-content {
+  position: relative;
+  z-index: 2;
+}
+
+.stats-number {
+  font-size: 2.5rem;
+  font-weight: var(--font-weight-bold);
+  color: var(--text-primary);
+  line-height: 1;
+  margin-bottom: var(--spacing-sm);
+}
+
+.stats-label {
+  font-size: var(--font-size-base);
+  color: var(--text-secondary);
+  font-weight: var(--font-weight-medium);
+}
+
+.stats-icon {
+  position: absolute;
+  top: var(--spacing-lg);
+  right: var(--spacing-lg);
+  font-size: 3rem;
+  opacity: 0.1;
+  z-index: 1;
+}
+
+/* ==================== 文献卡片 ==================== */
+
+.literature-card {
+  margin: 0 var(--spacing-lg) var(--spacing-xl);
+  border: none;
+  border-radius: var(--border-radius-lg);
+  box-shadow: var(--shadow-md);
+  overflow: hidden;
+}
+
+.literature-card .el-card__header {
+  background: var(--background-light);
+  border-bottom: 1px solid var(--border-lighter);
+  padding: var(--spacing-lg) var(--spacing-xl);
+}
+
+.card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.card-header span {
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-semibold);
+  color: var(--text-primary);
+}
+
+.literature-card .el-card__body {
+  padding: 0;
+}
+
+/* ==================== 搜索区域 ==================== */
+
+.search-section {
+  padding: var(--spacing-xl);
+  background: var(--background-white);
+  border-bottom: 1px solid var(--border-lighter);
+}
+
+.search-form {
+  display: flex;
+  gap: var(--spacing-md);
+  align-items: flex-end;
+  flex-wrap: wrap;
+}
+
+.search-item {
+  flex: 1;
+  min-width: 200px;
+}
+
+.search-item .el-form-item__label {
+  font-weight: var(--font-weight-medium);
+  color: var(--text-primary);
+}
+
+.search-buttons {
+  display: flex;
+  gap: var(--spacing-sm);
+}
+
+.search-button {
+  border-radius: var(--border-radius-md);
+  font-weight: var(--font-weight-medium);
+  transition: all var(--duration-fast) var(--ease-out);
+}
+
+.search-button:hover {
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-md);
+}
+
+/* ==================== 表格样式 ==================== */
+
+.literature-table {
+  background: var(--background-white);
+}
+
+.literature-table .el-table__header-wrapper {
+  background: var(--background-light);
+}
+
+.literature-table .el-table__header th {
+  background: var(--background-light);
+  color: var(--text-primary);
+  font-weight: var(--font-weight-semibold);
+  border-bottom: 2px solid var(--border-light);
+}
+
+.literature-table .el-table__row {
+  transition: background-color var(--duration-fast) var(--ease-out);
+}
+
+.literature-table .el-table__row:hover {
+  background-color: var(--primary-lightest);
+}
+
+.literature-table .el-table__row td {
+  border-bottom: 1px solid var(--border-lighter);
+  padding: var(--spacing-md) var(--spacing-lg);
+}
+
+/* 文献标题样式 */
+.literature-title {
+  font-weight: var(--font-weight-medium);
+  color: var(--primary-color);
+  cursor: pointer;
+  transition: color var(--duration-fast) var(--ease-out);
+  line-height: var(--line-height-relaxed);
+}
+
+.literature-title:hover {
+  color: var(--primary-light);
+  text-decoration: underline;
+}
+
+/* 作者样式 */
+.literature-authors {
+  color: var(--text-secondary);
+  font-size: var(--font-size-sm);
+}
+
+/* 来源样式 */
+.literature-source {
+  display: inline-block;
+  padding: 2px 8px;
+  background: var(--info-lightest);
+  color: var(--info-color);
+  border-radius: var(--border-radius-xl);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-medium);
+}
+
+/* 期刊样式 */
+.literature-journal {
+  color: var(--text-tertiary);
+  font-size: var(--font-size-sm);
+  font-style: italic;
+}
+
+/* 日期样式 */
+.literature-date {
+  color: var(--text-secondary);
+  font-size: var(--font-size-sm);
+}
+
+/* ==================== 分页样式 ==================== */
+
+.pagination-container {
+  padding: var(--spacing-xl);
+  background: var(--background-white);
+  border-top: 1px solid var(--border-lighter);
+  display: flex;
+  justify-content: center;
+}
+
+.pagination-container .el-pagination {
+  --el-pagination-button-color: var(--text-secondary);
+  --el-pagination-hover-color: var(--primary-color);
+  --el-pagination-button-bg-color: var(--background-white);
+  --el-pagination-button-disabled-color: var(--text-disabled);
+  --el-pagination-button-disabled-bg-color: var(--background-light);
+}
+
+/* ==================== 加载状态 ==================== */
+
+.loading-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: var(--spacing-xxxl);
+  color: var(--text-secondary);
+}
+
+.loading-spinner {
+  margin-bottom: var(--spacing-md);
+}
+
+.loading-text {
+  font-size: var(--font-size-base);
+  color: var(--text-secondary);
+}
+
+/* ==================== 空状态 ==================== */
+
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: var(--spacing-xxxl);
+  color: var(--text-tertiary);
+}
+
+.empty-icon {
+  font-size: 4rem;
+  margin-bottom: var(--spacing-lg);
+  opacity: 0.5;
+}
+
+.empty-text {
+  font-size: var(--font-size-lg);
+  margin-bottom: var(--spacing-sm);
+}
+
+.empty-description {
+  font-size: var(--font-size-sm);
+  color: var(--text-disabled);
+}
+
+/* ==================== 响应式设计 ==================== */
+
+@media (max-width: 1200px) {
+  .stats-row {
+    padding: 0 var(--spacing-md);
+  }
+  
+  .literature-card {
+    margin: 0 var(--spacing-md) var(--spacing-xl);
+  }
+}
+
+@media (max-width: 768px) {
+  .doctor-header {
+    padding: var(--spacing-lg) 0;
+  }
+  
+  .page-title {
+    font-size: var(--font-size-xxl);
+    flex-direction: column;
+    gap: var(--spacing-sm);
+  }
+  
+  .page-subtitle {
+    font-size: var(--font-size-base);
+  }
+  
+  .stats-row {
+    padding: 0 var(--spacing-sm);
+  }
+  
+  .literature-card {
+    margin: 0 var(--spacing-sm) var(--spacing-lg);
+  }
+  
+  .search-form {
+    flex-direction: column;
+  }
+  
+  .search-item {
+    min-width: auto;
+  }
+  
+  .search-buttons {
+    width: 100%;
+    justify-content: center;
+  }
+  
+  .card-header {
+    flex-direction: column;
+    gap: var(--spacing-md);
+    align-items: flex-start;
+  }
+}
+
+@media (max-width: 480px) {
+  .stats-row .el-col {
+    margin-bottom: var(--spacing-md);
+  }
+  
+  .literature-table .el-table__row td {
+    padding: var(--spacing-sm);
+  }
+  
+  .pagination-container {
+    padding: var(--spacing-md);
+  }
+}
+
+/* ==================== 暗色主题适配 ==================== */
+
+[data-theme="dark"] .doctor-header {
+  background: linear-gradient(135deg, var(--primary-darker) 0%, var(--primary-dark) 100%);
+}
+
+[data-theme="dark"] .stats-card,
+[data-theme="dark"] .literature-card {
+  background: var(--background-white);
+  border-color: var(--border-color);
+}
+
+[data-theme="dark"] .literature-table {
+  background: var(--background-white);
+}
+
+[data-theme="dark"] .literature-table .el-table__header th {
+  background: var(--background-light);
+  border-bottom-color: var(--border-color);
+}
+
+[data-theme="dark"] .literature-table .el-table__row:hover {
+  background-color: var(--background-light);
+}

@@ -1,7 +1,14 @@
 import { createApp } from 'vue'
 import App from './App.vue'
 import router from './router'
+
+// 导入新的样式系统
+import '@/assets/styles/base/variables.css'
+import '@/assets/styles/base/reset.css'
+import '@/assets/styles/base/typography.css'
+import '@/assets/styles/base/animations.css'
 import '@/assets/css/global.css'
+
 import ElementPlus from 'element-plus'
 import 'element-plus/dist/index.css'
 import zhCn from 'element-plus/es/locale/lang/zh-cn'
