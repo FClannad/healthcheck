@@ -108,19 +108,27 @@ public class MedicalLiteratureController {
      */
     @GetMapping("/list")
     public Result getList(@RequestParam(required = false) String keyword,
-                         @RequestParam(required = false) String category,
+                         @RequestParam(required = false) String source,
+                         @RequestParam(required = false) String journal,
                          @RequestParam(defaultValue = "1") Integer pageNum,
                          @RequestParam(defaultValue = "10") Integer pageSize) {
         try {
             MedicalLiterature query = new MedicalLiterature();
-            // Simple keyword search in title
+
+            // 关键词搜索 - 在标题中搜索
             if (keyword != null && !keyword.trim().isEmpty()) {
-                query.setTitle(keyword);
+                query.setTitle(keyword.trim());
             }
-            // Category filter - 移除category字段，可以通过keywords搜索
-            // if (category != null && !category.trim().isEmpty()) {
-            //     query.setCategory(category);
-            // }
+
+            // 来源筛选
+            if (source != null && !source.trim().isEmpty()) {
+                query.setCrawlSource(source.trim());
+            }
+
+            // 期刊筛选
+            if (journal != null && !journal.trim().isEmpty()) {
+                query.setJournal(journal.trim());
+            }
 
             PageInfo<MedicalLiterature> pageInfo = medicalLiteratureService.selectPage(query, pageNum, pageSize);
             return Result.success(pageInfo);
@@ -244,6 +252,34 @@ public class MedicalLiteratureController {
         } catch (Exception e) {
             logger.error("Get admin stats failed", e);
             return Result.error("500", "获取统计数据失败: " + e.getMessage());
+        }
+    }
+
+    /**
+     * 获取今日爬取数量
+     */
+    @GetMapping("/count-today")
+    public Result getTodayCount() {
+        try {
+            int count = medicalLiteratureService.getTodayCount();
+            return Result.success(count);
+        } catch (Exception e) {
+            logger.error("获取今日爬取数量失败", e);
+            return Result.error("获取今日爬取数量失败");
+        }
+    }
+
+    /**
+     * 获取最近几天的文献数量
+     */
+    @GetMapping("/count-recent")
+    public Result getRecentCount(@RequestParam(defaultValue = "7") int days) {
+        try {
+            int count = medicalLiteratureService.getRecentCount(days);
+            return Result.success(count);
+        } catch (Exception e) {
+            logger.error("获取最近文献数量失败", e);
+            return Result.error("获取最近文献数量失败");
         }
     }
 }

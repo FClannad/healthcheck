@@ -29,10 +29,12 @@ const router = createRouter({
         { path: 'feedback', meta: { name: '反馈和建议' }, component: () => import('@/views/manager/Feedback.vue'), },
         { path: 'userFeedback', meta: { name: '用户端反馈和建议' }, component: () => import('@/views/manager/UserFeedback.vue'), },
         { path: 'calendar', meta: { name: '日程安排' }, component: () => import('@/views/manager/Calendar.vue'), },
-        { path: 'brief', meta: { name: '简介' }, component: () => import('@/views/manager/Brief.vue'), },
+        { path: 'brief', meta: { name: '平台简介' }, component: () => import('@/views/manager/Brief.vue'), },
         { path: 'dataAnalysis', meta: { name: '数据' }, component: () => import('@/views/manager/DataAnalysis.vue'), },
         { path: 'medicalLiterature', meta: { name: '医疗文献管理' }, component: () => import('@/views/manager/MedicalLiterature.vue'), },
+        { path: 'doctorLiterature', meta: { name: '医疗文献阅读' }, component: () => import('@/views/manager/DoctorLiterature.vue'), },
         { path: 'crawlerManagement', meta: { name: '爬虫管理中心' }, component: () => import('@/views/manager/CrawlerManagement.vue'), },
+        { path: 'aiConsultation', meta: { name: 'AI健康咨询' }, component: () => import('@/views/manager/AiConsultation.vue'), },
       ]
     },
     {
@@ -41,7 +43,8 @@ const router = createRouter({
       children: [
         { path: 'home', component: () => import('@/views/front/Home.vue'),  },
         { path: 'person', component: () => import('@/views/front/Person.vue'),  },
-        { path: 'literature', meta: { name: '医疗文献' }, component: () => import('@/views/front/MedicalLiterature.vue') }
+        { path: 'literature', meta: { name: '医疗文献' }, component: () => import('@/views/front/MedicalLiterature.vue') },
+        { path: 'ai-consultation', meta: { name: 'AI健康咨询' }, component: () => import('@/views/manager/AiConsultation.vue') }
       ]
     },
     { path: '/login', component: () => import('@/views/Login.vue') },

@@ -228,7 +228,9 @@ const reset = () => {
 load()
 </script>
 
-<style>
+<style scoped>
+@import '@/assets/styles/pages/doctor-management.css';
+
 .myTooltip {
   width: 500px;
 }
