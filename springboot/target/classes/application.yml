@@ -93,9 +93,9 @@ mybatis:
 fileBaseUrl: http://localhost:${server.port}
 
 # AI模型配置 - 暂时禁用
-# api:
-#   key: "c0caa0c6b6164feea51e7c6dc4800b76.3VlyCD5XtuR83SHA"  # 请替换为实际的API密钥
-#   url: "https://open.bigmodel.cn/api/paas/v4/chat/completions"  # 智谱AI API地址
+api:
+  key:  # 请替换为实际的API密钥
+  url:   # 智谱AI API地址
 
 # 爬虫配置 - 优化性能配置
 crawler:

@@ -22,7 +22,7 @@ import java.util.List;
  * arXiv数据源
  */
 @Component
-public class ArxivSource implements SourceClient {
+public class  ArxivSource implements SourceClient {
     
     private static final Logger log = LoggerFactory.getLogger(ArxivSource.class);
     private static final String API_URL = "https://export.arxiv.org/api/query";
