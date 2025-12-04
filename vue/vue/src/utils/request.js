@@ -1,6 +1,7 @@
 import axios from "axios";
 import {ElMessage} from "element-plus";
 import router from "@/router/index.js";
+import logger from "@/utils/logger.js";
 
 const request = axios.create({
     baseURL: import.meta.env.VITE_BASE_URL,
@@ -15,6 +16,7 @@ request.interceptors.request.use(config => {
     config.headers['token'] = user.token || ''
     return config
 }, error => {
+    logger.error('请求拦截器错误:', error)
     return Promise.reject(error)
 });
 
@@ -44,7 +46,7 @@ request.interceptors.response.use(
         } else if (error.response.status === 500) {
             ElMessage.error('系统异常，请查看后端控制台报错')
         } else {
-            console.error(error.message)
+            logger.error('请求错误:', error.message)
         }
         return Promise.reject(error)
     }

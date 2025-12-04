@@ -2,7 +2,7 @@ package com.example.service;
 
 import com.example.entity.MedicalLiterature;
 import com.example.mapper.MedicalLiteratureMapper;
-import com.example.util.SimilarityUtil;
+import com.example.utils.SimilarityUtil;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import jakarta.annotation.Resource;

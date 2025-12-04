@@ -9,26 +9,10 @@ spring:
       import-check:
         enabled: false  # 禁用配置导入检查
     discovery:
-      enabled: true
+      enabled: false  # 禁用服务发现
     loadbalancer:
       ribbon:
         enabled: false
-
-# Eureka Client Configuration
-eureka:
-  client:
-    enabled: false  # 暂时禁用，避免启动时连接错误
-    service-url:
-      defaultZone: http://localhost:8761/eureka/
-    register-with-eureka: true
-    fetch-registry: true
-    healthcheck:
-      enabled: true
-  instance:
-    hostname: localhost
-    prefer-ip-address: true
-    lease-renewal-interval-in-seconds: 30
-    lease-expiration-duration-in-seconds: 90
 
 # Management endpoints for monitoring
 management:

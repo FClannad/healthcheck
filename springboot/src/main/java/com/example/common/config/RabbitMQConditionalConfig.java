@@ -1,5 +1,7 @@
 package com.example.common.config;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.amqp.core.*;
 import org.springframework.amqp.rabbit.config.SimpleRabbitListenerContainerFactory;
 import org.springframework.amqp.rabbit.connection.ConnectionFactory;
@@ -19,6 +21,8 @@ import org.springframework.context.annotation.Primary;
 @Configuration
 @ConditionalOnProperty(name = "spring.rabbitmq.enabled", havingValue = "true", matchIfMissing = false)
 public class RabbitMQConditionalConfig {
+
+    private static final Logger logger = LoggerFactory.getLogger(RabbitMQConditionalConfig.class);
 
     // 队列名称常量
     public static final String REPORT_GENERATION_QUEUE = "report.generation.queue";
@@ -59,17 +63,16 @@ public class RabbitMQConditionalConfig {
         // 设置消息确认回调
         rabbitTemplate.setConfirmCallback((correlationData, ack, cause) -> {
             if (ack) {
-                System.out.println("消息发送成功: " + correlationData);
+                logger.info("消息发送成功: {}", correlationData);
             } else {
-                System.err.println("消息发送失败: " + correlationData + ", 原因: " + cause);
+                logger.error("消息发送失败: {}, 原因: {}", correlationData, cause);
             }
         });
 
         // 设置消息返回回调
         rabbitTemplate.setReturnsCallback(returned -> {
-            System.err.println("消息被退回: " + returned.getMessage() +
-                ", 退回码: " + returned.getReplyCode() +
-                ", 退回原因: " + returned.getReplyText());
+            logger.error("消息被退回: {}, 退回码: {}, 退回原因: {}", 
+                returned.getMessage(), returned.getReplyCode(), returned.getReplyText());
         });
 
         return rabbitTemplate;
