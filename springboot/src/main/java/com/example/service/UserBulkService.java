@@ -21,11 +21,51 @@ public class UserBulkService {
     private UserMapper userMapper;
 
     public static class BulkResult {
-        public int requested;
-        public int inserted;
-        public long millis;
-        public String mode; // single | batch
-        public int batchSize;
+        private int requested;
+        private int inserted;
+        private long millis;
+        private String mode; // single | batch
+        private int batchSize;
+
+        public int getRequested() {
+            return requested;
+        }
+
+        public void setRequested(int requested) {
+            this.requested = requested;
+        }
+
+        public int getInserted() {
+            return inserted;
+        }
+
+        public void setInserted(int inserted) {
+            this.inserted = inserted;
+        }
+
+        public long getMillis() {
+            return millis;
+        }
+
+        public void setMillis(long millis) {
+            this.millis = millis;
+        }
+
+        public String getMode() {
+            return mode;
+        }
+
+        public void setMode(String mode) {
+            this.mode = mode;
+        }
+
+        public int getBatchSize() {
+            return batchSize;
+        }
+
+        public void setBatchSize(int batchSize) {
+            this.batchSize = batchSize;
+        }
     }
 
     // 生成模拟用户数据
@@ -64,11 +104,11 @@ public class UserBulkService {
             }
         }
         BulkResult r = new BulkResult();
-        r.requested = users.size();
-        r.inserted = ok;
-        r.millis = System.currentTimeMillis() - start;
-        r.mode = "single";
-        r.batchSize = 1;
+        r.setRequested(users.size());
+        r.setInserted(ok);
+        r.setMillis(System.currentTimeMillis() - start);
+        r.setMode("single");
+        r.setBatchSize(1);
         return r;
     }
 
@@ -87,16 +127,21 @@ public class UserBulkService {
                 log.warn("Batch insert failed for slice {}-{}: {}", i, end, e.getMessage());
                 // 退化为单条以定位异常数据
                 for (User u : slice) {
-                    try { userMapper.insert(u); totalOk++; } catch (Exception ignore) {}
+                    try {
+                        userMapper.insert(u);
+                        totalOk++;
+                    } catch (Exception fallbackException) {
+                        log.debug("Individual insert also failed for user {}: {}", u.getUsername(), fallbackException.getMessage());
+                    }
                 }
             }
         }
         BulkResult r = new BulkResult();
-        r.requested = users.size();
-        r.inserted = totalOk;
-        r.millis = System.currentTimeMillis() - start;
-        r.mode = "batch";
-        r.batchSize = batchSize;
+        r.setRequested(users.size());
+        r.setInserted(totalOk);
+        r.setMillis(System.currentTimeMillis() - start);
+        r.setMode("batch");
+        r.setBatchSize(batchSize);
         return r;
     }
 }

@@ -140,7 +140,6 @@ const login = () => {
   formRef.value.validate(valid => {
     if (valid) {
       data.loading = true
-      console.log('发送的登录请求数据:', data.form);
 
       request.post('/login', data.form).then(res => {
         if (res.code === '200') {
