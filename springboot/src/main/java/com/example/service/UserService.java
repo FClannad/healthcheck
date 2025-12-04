@@ -8,8 +8,6 @@ import com.example.entity.Account;
 import com.example.entity.User;
 import com.example.exception.CustomException;
 import com.example.mapper.UserMapper;
-import com.example.utils.TokenUtils;
-import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
@@ -19,13 +17,18 @@ import java.util.List;
 
 
 /**
- * 业务层方法
+ * 用户业务层
  */
 @Service
-public class UserService {
+public class UserService extends BaseAccountService {
 
     @Resource
     private UserMapper userMapper;
+
+    @Override
+    protected RoleEnum getRoleEnum() {
+        return RoleEnum.USER;
+    }
 
     public void add(User user) {
         User dbUser = userMapper.selectByUsername(user.getUsername());
@@ -65,27 +68,15 @@ public class UserService {
     }
 
     public PageInfo<User> selectPage(User user, Integer pageNum, Integer pageSize) {
-        PageHelper.startPage(pageNum, pageSize);
-        List<User> list = userMapper.selectAll(user);
-        return PageInfo.of(list);
+        return selectPage(pageNum, pageSize, user.getName(), userMapper.selectAll(user));
     }
 
     /**
      * 登录
      */
     public User login(@RequestBody Account account) {
-
         User dbUser = userMapper.selectByUsername(account.getUsername());
-        if (ObjectUtil.isNull(dbUser)) {
-            throw new CustomException(ResultCodeEnum.USER_NOT_EXIST_ERROR);
-        }
-        if (!dbUser.getPassword().equals(account.getPassword())) {
-            throw new CustomException(ResultCodeEnum.USER_ACCOUNT_ERROR);
-        }
-        // 生成token
-        String token = TokenUtils.createToken(dbUser.getId() + "-" + dbUser.getRole(), dbUser.getPassword());
-        dbUser.setToken(token);
-        return dbUser;
+        return (User) super.login(account, dbUser);
     }
 
     /**
@@ -93,14 +84,7 @@ public class UserService {
      */
     public void updatePassword(Account account) {
         User dbUser = userMapper.selectByUsername(account.getUsername());
-        if (ObjectUtil.isNull(dbUser)) {
-            throw new CustomException(ResultCodeEnum.USER_NOT_EXIST_ERROR);
-        }
-        if (!account.getPassword().equals(dbUser.getPassword())) {
-            throw new CustomException(ResultCodeEnum.PARAM_PASSWORD_ERROR);
-        }
-        dbUser.setPassword(account.getNewPassword());
+        super.updatePassword(account, dbUser);
         userMapper.updateById(dbUser);
     }
-
 }

@@ -8,8 +8,6 @@ import com.example.entity.Account;
 import com.example.entity.Doctor;
 import com.example.exception.CustomException;
 import com.example.mapper.DoctorMapper;
-import com.example.utils.TokenUtils;
-import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
@@ -17,23 +15,32 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
 
+
 /**
- * 业务层方法
+ * 医生业务层
  */
 @Service
-public class DoctorService {
+public class DoctorService extends BaseAccountService {
 
     @Resource
     private DoctorMapper doctorMapper;
 
+    @Override
+    protected RoleEnum getRoleEnum() {
+        return RoleEnum.DOCTOR;
+    }
+
     public void add(Doctor doctor) {
         Doctor dbDoctor = doctorMapper.selectByUsername(doctor.getUsername());
         if (ObjectUtil.isNotNull(dbDoctor)) {
-            throw new CustomException(ResultCodeEnum.USER_EXIST_ERROR);}
+            throw new CustomException(ResultCodeEnum.USER_EXIST_ERROR);
+        }
         if (ObjectUtil.isEmpty(doctor.getPassword())) {
-            doctor.setPassword(Constants.USER_DEFAULT_PASSWORD);}
+            doctor.setPassword(Constants.USER_DEFAULT_PASSWORD);
+        }
         if (ObjectUtil.isEmpty(doctor.getName())) {
-            doctor.setName(doctor.getUsername());}
+            doctor.setName(doctor.getUsername());
+        }
         doctor.setRole(RoleEnum.DOCTOR.name());
         doctorMapper.insert(doctor);
     }
@@ -61,27 +68,15 @@ public class DoctorService {
     }
 
     public PageInfo<Doctor> selectPage(Doctor doctor, Integer pageNum, Integer pageSize) {
-        PageHelper.startPage(pageNum, pageSize);
-        List<Doctor> list = doctorMapper.selectAll(doctor);
-        return PageInfo.of(list);
+        return selectPage(pageNum, pageSize, doctor.getName(), doctorMapper.selectAll(doctor));
     }
 
     /**
      * 登录
      */
     public Doctor login(@RequestBody Account account) {
-
         Doctor dbDoctor = doctorMapper.selectByUsername(account.getUsername());
-        if (ObjectUtil.isNull(dbDoctor)) {
-            throw new CustomException(ResultCodeEnum.USER_NOT_EXIST_ERROR);
-        }
-        if (!dbDoctor.getPassword().equals(account.getPassword())) {
-            throw new CustomException(ResultCodeEnum.USER_ACCOUNT_ERROR);
-        }
-        // 生成token
-        String token = TokenUtils.createToken(dbDoctor.getId() + "-" + dbDoctor.getRole(), dbDoctor.getPassword());
-        dbDoctor.setToken(token);
-        return dbDoctor;
+        return (Doctor) super.login(account, dbDoctor);
     }
 
     /**
@@ -89,21 +84,20 @@ public class DoctorService {
      */
     public void updatePassword(Account account) {
         Doctor dbDoctor = doctorMapper.selectByUsername(account.getUsername());
-        if (ObjectUtil.isNull(dbDoctor)) {
-            throw new CustomException(ResultCodeEnum.USER_NOT_EXIST_ERROR);
-        }
-        if (!account.getPassword().equals(dbDoctor.getPassword())) {
-            throw new CustomException(ResultCodeEnum.PARAM_PASSWORD_ERROR);
-        }
-        dbDoctor.setPassword(account.getNewPassword());
+        super.updatePassword(account, dbDoctor);
         doctorMapper.updateById(dbDoctor);
     }
 
+    /**
+     * 根据职称ID查询医生数量
+     */
     public Integer selectByTitleId(Integer titleId) {
         return doctorMapper.selectByTitleId(titleId);
-
     }
 
+    /**
+     * 根据科室ID查询医生数量
+     */
     public Integer selectByOfficeId(Integer officeId) {
         return doctorMapper.selectByOfficeId(officeId);
     }

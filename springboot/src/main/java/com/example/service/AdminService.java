@@ -8,8 +8,6 @@ import com.example.entity.Account;
 import com.example.entity.Admin;
 import com.example.exception.CustomException;
 import com.example.mapper.AdminMapper;
-import com.example.utils.TokenUtils;
-import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
@@ -19,13 +17,18 @@ import java.util.List;
 
 
 /**
- * 业务层方法
+ * 管理员业务层
  */
 @Service
-public class AdminService {
+public class AdminService extends BaseAccountService {
 
     @Resource
     private AdminMapper adminMapper;
+
+    @Override
+    protected RoleEnum getRoleEnum() {
+        return RoleEnum.ADMIN;
+    }
 
     public void add(Admin admin) {
         Admin dbAdmin = adminMapper.selectByUsername(admin.getUsername());
@@ -65,27 +68,15 @@ public class AdminService {
     }
 
     public PageInfo<Admin> selectPage(Admin admin, Integer pageNum, Integer pageSize) {
-        PageHelper.startPage(pageNum, pageSize);
-        List<Admin> list = adminMapper.selectAll(admin);
-        return PageInfo.of(list);
+        return selectPage(pageNum, pageSize, admin.getName(), adminMapper.selectAll(admin));
     }
 
     /**
      * 登录
      */
     public Admin login(@RequestBody Account account) {
-
         Admin dbAdmin = adminMapper.selectByUsername(account.getUsername());
-        if (ObjectUtil.isNull(dbAdmin)) {
-            throw new CustomException(ResultCodeEnum.USER_NOT_EXIST_ERROR);
-        }
-        if (!dbAdmin.getPassword().equals(account.getPassword())) {
-            throw new CustomException(ResultCodeEnum.USER_ACCOUNT_ERROR);
-        }
-        // 生成token
-        String token = TokenUtils.createToken(dbAdmin.getId() + "-" + dbAdmin.getRole(), dbAdmin.getPassword());
-        dbAdmin.setToken(token);
-        return dbAdmin;
+        return (Admin) super.login(account, dbAdmin);
     }
 
     /**
@@ -93,14 +84,7 @@ public class AdminService {
      */
     public void updatePassword(Account account) {
         Admin dbAdmin = adminMapper.selectByUsername(account.getUsername());
-        if (ObjectUtil.isNull(dbAdmin)) {
-            throw new CustomException(ResultCodeEnum.USER_NOT_EXIST_ERROR);
-        }
-        if (!account.getPassword().equals(dbAdmin.getPassword())) {
-            throw new CustomException(ResultCodeEnum.PARAM_PASSWORD_ERROR);
-        }
-        dbAdmin.setPassword(account.getNewPassword());
+        super.updatePassword(account, dbAdmin);
         adminMapper.updateById(dbAdmin);
     }
-
 }

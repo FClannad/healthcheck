@@ -34,6 +34,7 @@
             <scope>runtime</scope>
         </dependency>
 
+        <!-- Hutool工具包 (已包含HTTP功能) -->
         <dependency>
             <groupId>cn.hutool</groupId>
             <artifactId>hutool-all</artifactId>
@@ -100,19 +101,7 @@
             <artifactId>jackson-databind</artifactId>
         </dependency>
 
-        <!-- 智谱AI SDK -->
-        <dependency>
-            <groupId>cn.hutool</groupId>
-            <artifactId>hutool-http</artifactId>
-            <version>5.8.25</version>
-        </dependency>
-
-        <!-- OkHttp for AI API calls -->
-        <dependency>
-            <groupId>com.squareup.okhttp3</groupId>
-            <artifactId>okhttp</artifactId>
-            <version>4.12.0</version>
-        </dependency>
+        <!-- 智谱AI SDK - 已包含在hutool-all中 -->
 
 
         <!-- Spring Cloud Dependencies -->
@@ -165,11 +154,6 @@
             <groupId>org.springdoc</groupId>
             <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
             <version>2.2.0</version>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.data</groupId>
-            <artifactId>spring-data-redis</artifactId>
-            <version>3.1.3</version>
         </dependency>
     </dependencies>
 
