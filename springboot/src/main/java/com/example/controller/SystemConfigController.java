@@ -284,10 +284,18 @@ public class SystemConfigController {
     @PostMapping("/import")
     public Result importConfigs(@RequestBody Map<String, Object> request) {
         try {
-            @SuppressWarnings("unchecked")
-            Map<String, Object> configs = (Map<String, Object>) request.get("configs");
+            Object configsObject = request.get("configs");
+            if (configsObject == null) {
+                return Result.error("400", "导入的配置数据为空");
+            }
             
-            if (configs == null || configs.isEmpty()) {
+            if (!(configsObject instanceof Map)) {
+                return Result.error("400", "配置数据格式错误");
+            }
+            
+            Map<String, Object> configs = extractConfigMap(configsObject);
+            
+            if (configs.isEmpty()) {
                 return Result.error("400", "导入的配置数据为空");
             }
             
@@ -312,6 +320,21 @@ public class SystemConfigController {
             logger.error("导入配置失败", e);
             return Result.error("500", "导入配置失败: " + e.getMessage());
         }
+    }
+    
+    /**
+     * 安全提取配置Map
+     */
+    private Map<String, Object> extractConfigMap(Object configsObject) {
+        Map<String, Object> result = new HashMap<>();
+        if (configsObject instanceof Map<?, ?> rawMap) {
+            for (Map.Entry<?, ?> entry : rawMap.entrySet()) {
+                if (entry.getKey() instanceof String key) {
+                    result.put(key, entry.getValue());
+                }
+            }
+        }
+        return result;
     }
 
     // 私有辅助方法

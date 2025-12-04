@@ -277,16 +277,11 @@ const loadLiteratureList = async () => {
       params.journal = searchForm.journal.trim()
     }
 
-    console.log('Loading literature with params:', params)
-
     const response = await request.get('/medical-literature/list', { params })
-
-    console.log('API Response:', response)
 
     if (response.code === '200') {
       literatureList.value = response.data.list || []
       pagination.total = response.data.total || 0
-      console.log('Loaded literature list:', literatureList.value.length, 'items, total:', pagination.total)
     } else {
       ElMessage.error(response.msg || '获取文献列表失败')
       literatureList.value = []

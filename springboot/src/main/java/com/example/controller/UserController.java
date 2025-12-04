@@ -52,12 +52,12 @@ public class UserController {
             r = userBulkService.insertBatch(users, batchSize);
         }
         Map<String, Object> data = new HashMap<>();
-        data.put("requested", r.requested);
-        data.put("inserted", r.inserted);
-        data.put("millis", r.millis);
-        data.put("mode", r.mode);
-        data.put("batchSize", r.batchSize);
-        data.put("tps", r.millis > 0 ? (r.inserted * 1000.0 / r.millis) : null);
+        data.put("requested", r.getRequested());
+        data.put("inserted", r.getInserted());
+        data.put("millis", r.getMillis());
+        data.put("mode", r.getMode());
+        data.put("batchSize", r.getBatchSize());
+        data.put("tps", r.getMillis() > 0 ? (r.getInserted() * 1000.0 / r.getMillis()) : null);
         return Result.success(data);
     }
 

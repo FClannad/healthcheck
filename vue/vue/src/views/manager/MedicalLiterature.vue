@@ -472,17 +472,11 @@ const loadLiteratureList = async () => {
       pageSize: pagination.pageSize
     }
     
-    console.log('正在加载文献列表...', params)
-    
     const response = await request.get('/medical-literature/admin/list', { params })
-    
-    console.log('文献列表响应:', response)
     
     if (response.code === '200') {
       literatureList.value = response.data.list || []
       total.value = response.data.total || 0
-      
-      console.log(`成功加载 ${literatureList.value.length} 篇文献，共 ${total.value} 篇`)
       
       // 确保显示真实数据的来源信息
       literatureList.value.forEach(lit => {
@@ -520,15 +514,11 @@ const loadStats = async () => {
 // 加载真实爬虫状态
 const loadCrawlerStatus = async () => {
   try {
-    console.log('加载真实爬虫状态...')
-
     // 调用新版爬虫状态API
     const response = await request.get('/api/crawler/v2/status')
 
     if (response.code === '200') {
       const status = response.data
-
-      console.log('爬虫状态响应:', status)
 
       // 更新爬虫状态显示
       Object.assign(crawlerStatus, {
@@ -539,10 +529,7 @@ const loadCrawlerStatus = async () => {
         lastResult: `支持数据源: ${status.sources?.join(', ') || 'arxiv, pubmed'}`,
         crawlerType: 'SIMPLIFIED_CRAWLER_V2'
       })
-
-      console.log('爬虫状态已更新:', crawlerStatus)
     } else {
-      console.warn('获取爬虫状态失败:', response.msg)
 
       // 设置警告状态
       Object.assign(crawlerStatus, {
@@ -757,8 +744,6 @@ const startManualCrawl = async () => {
     crawlerProgress.value = 100
     crawlerProgressText.value = '爬取完成！'
     crawlerProgressStatus.value = 'success'
-
-    console.log('爬虫响应:', response)
 
     if (response.code === '200') {
       const result = response.data
