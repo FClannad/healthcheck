@@ -6,6 +6,13 @@ spring:
   main:
     allow-circular-references: true # 临时允许循环引用
     allow-bean-definition-overriding: true # 允许Bean覆盖
+  # 排除 Eureka 自动配置，彻底禁用 Eureka 客户端
+  autoconfigure:
+    exclude:
+      - org.springframework.cloud.netflix.eureka.EurekaClientAutoConfiguration
+      - org.springframework.cloud.netflix.eureka.EurekaDiscoveryClientConfiguration
+      - org.springframework.cloud.netflix.eureka.reactive.EurekaReactiveDiscoveryClientConfiguration
+      - org.springframework.cloud.netflix.eureka.loadbalancer.LoadBalancerEurekaAutoConfiguration
   cloud:
     config:
       enabled: false
@@ -15,7 +22,7 @@ spring:
     driver-class-name: com.mysql.cj.jdbc.Driver
     username: root
     password: 2004
-    url: jdbc:mysql://localhost:3306/xm_health_check?useUnicode=true&characterEncoding=utf-8&rewriteBatchedStatements=true&useServerPrepStmts=true&cachePrepStmts=true&prepStmtCacheSize=250&useSSL=false&allowPublicKeyRetrieval=true
+    url: jdbc:mysql://localhost:3306/fengbinbin?useUnicode=true&characterEncoding=utf-8&rewriteBatchedStatements=true&useServerPrepStmts=true&cachePrepStmts=true&prepStmtCacheSize=250&useSSL=false&allowPublicKeyRetrieval=true
     # HikariCP连接池优化配置
     hikari:
       # 连接池名称
@@ -92,10 +99,13 @@ mybatis:
 
 fileBaseUrl: http://localhost:${server.port}
 
-# AI模型配置 - 暂时禁用
+# AI模型配置 - 智谱AI
 api:
-  key: "c0caa0c6b6164feea51e7c6dc4800b76.3VlyCD5XtuR83SHA"  # 请替换为实际的API密钥
+  key: "c0caa0c6b6164feea51e7c6dc4800b76.3VlyCD5XtuR83SHA"  # 智谱AI API密钥
   url: "https://open.bigmodel.cn/api/paas/v4/chat/completions"  # 智谱AI API地址
+  model: "glm-4-flash"  # 使用的模型，glm-4-flash 是免费的快速模型
+  enabled: true  # 是否启用AI服务
+  timeout: 30000  # 请求超时时间（毫秒）
 
 # 爬虫配置 - 优化性能配置
 crawler:

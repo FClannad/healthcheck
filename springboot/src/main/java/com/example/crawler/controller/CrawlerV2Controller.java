@@ -55,12 +55,14 @@ public class CrawlerV2Controller {
      *   "sources": ["arxiv", "pubmed"],
      *   "classifyEnabled": true
      * }
+     *
+     * 【未使用接口】前端使用GET方式调用，此POST接口保留备用
      */
-    @PostMapping("/crawl")
-    public Result crawlPost(@RequestBody CrawlRequest request) {
-        CrawlResult result = orchestrator.crawl(request);
-        return Result.success(result);
-    }
+    // @PostMapping("/crawl")
+    // public Result crawlPost(@RequestBody CrawlRequest request) {
+    //     CrawlResult result = orchestrator.crawl(request);
+    //     return Result.success(result);
+    // }
     
     /**
      * 获取爬虫状态
@@ -75,26 +77,30 @@ public class CrawlerV2Controller {
     /**
      * 获取监控指标
      * GET /api/crawler/v2/metrics
+     *
+     * 【未使用接口】前端未调用此接口，保留用于监控
      */
-    @GetMapping("/metrics")
-    public Result getMetrics() {
-        Object metrics = metricsAdapter.getMetrics();
-        return Result.success(metrics);
-    }
+    // @GetMapping("/metrics")
+    // public Result getMetrics() {
+    //     Object metrics = metricsAdapter.getMetrics();
+    //     return Result.success(metrics);
+    // }
 
     /**
      * 健康检查
      * GET /api/crawler/v2/health
+     *
+     * 【未使用接口】前端未调用此接口，保留用于健康检查
      */
-    @GetMapping("/health")
-    public Result health() {
-        Map<String, Object> status = orchestrator.getStatus();
-        boolean healthy = (Boolean) status.get("enabled");
-
-        if (healthy) {
-            return Result.success("Crawler is healthy");
-        } else {
-            return Result.error("Crawler is disabled");
-        }
-    }
+    // @GetMapping("/health")
+    // public Result health() {
+    //     Map<String, Object> status = orchestrator.getStatus();
+    //     boolean healthy = (Boolean) status.get("enabled");
+    //
+    //     if (healthy) {
+    //         return Result.success("Crawler is healthy");
+    //     } else {
+    //         return Result.error("Crawler is disabled");
+    //     }
+    // }
 }

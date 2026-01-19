@@ -9,21 +9,28 @@ spring:
       import-check:
         enabled: false  # 禁用配置导入检查
     discovery:
-      enabled: true
+      enabled: false  # 禁用服务发现
     loadbalancer:
       ribbon:
         enabled: false
+  # 禁用 Spring Cloud 自动配置
+  autoconfigure:
+    exclude:
+      - org.springframework.cloud.netflix.eureka.EurekaClientAutoConfiguration
+      - org.springframework.cloud.netflix.eureka.EurekaDiscoveryClientConfiguration
 
-# Eureka Client Configuration
+# Eureka Client Configuration - 完全禁用
 eureka:
   client:
-    enabled: false  # 暂时禁用，避免启动时连接错误
+    enabled: false  # 完全禁用 Eureka 客户端
     service-url:
       defaultZone: http://localhost:8761/eureka/
-    register-with-eureka: true
-    fetch-registry: true
+    register-with-eureka: false  # 禁用注册
+    fetch-registry: false  # 禁用获取注册表
     healthcheck:
-      enabled: true
+      enabled: false  # 禁用健康检查
+    should-enforce-registration-at-init: false  # 禁用初始化时强制注册
+    should-unregister-on-shutdown: false  # 禁用关闭时注销
   instance:
     hostname: localhost
     prefer-ip-address: true

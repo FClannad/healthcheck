@@ -12,6 +12,10 @@ import java.util.Map;
 
 /**
  * 数据维护控制器 - 用于数据修复和维护
+ *
+ * 【未使用接口说明】
+ * 此控制器的所有接口为后台维护接口，前端未调用。
+ * 保留用于数据库维护和健康检查。
  */
 @RestController
 @RequestMapping("/api/maintenance")

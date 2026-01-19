@@ -57,21 +57,23 @@ public class AdminController {
 
     /**
      * 单个查询
+     * 【未使用接口】前端未调用此接口，保留备用
      */
-    @GetMapping("/selectById/{id}")
-    public Result selectById(@PathVariable Integer id) {
-        Admin admin = adminService.selectById(id);
-        return Result.success(admin);
-    }
+    // @GetMapping("/selectById/{id}")
+    // public Result selectById(@PathVariable Integer id) {
+    //     Admin admin = adminService.selectById(id);
+    //     return Result.success(admin);
+    // }
 
     /**
      * 查询所有
+     * 【未使用接口】前端未调用此接口，保留备用
      */
-    @GetMapping("/selectAll")
-    public Result selectAll(Admin admin) {
-        List<Admin> list = adminService.selectAll(admin);
-        return Result.success(list);
-    }
+    // @GetMapping("/selectAll")
+    // public Result selectAll(Admin admin) {
+    //     List<Admin> list = adminService.selectAll(admin);
+    //     return Result.success(list);
+    // }
 
     /**
      * 分页查询

@@ -27,8 +27,8 @@ public class AiConsultationService {
     @Autowired
     private AiConsultationMapper aiConsultationMapper;
     
-    // @Autowired
-    // private ZhipuAiService zhipuAiService;  // 暂时禁用外部AI服务
+    @Autowired
+    private ZhipuAiService zhipuAiService;  // 智谱AI服务
 
     @Autowired
     private ExaminationPackageService examinationPackageService;
@@ -41,15 +41,30 @@ public class AiConsultationService {
             // 获取对话历史（如果有sessionId）
             List<String> conversationHistory = new ArrayList<>();
             if (request.getSessionId() != null && !request.getSessionId().isEmpty()) {
-                List<AiConsultation> history = aiConsultationMapper.selectBySessionId(request.getSessionId());
-                for (AiConsultation consultation : history) {
-                    conversationHistory.add(consultation.getUserQuestion());
-                    conversationHistory.add(consultation.getAiResponse());
+                try {
+                    List<AiConsultation> history = aiConsultationMapper.selectBySessionId(request.getSessionId());
+                    for (AiConsultation consultation : history) {
+                        conversationHistory.add(consultation.getUserQuestion());
+                        conversationHistory.add(consultation.getAiResponse());
+                    }
+                } catch (Exception e) {
+                    log.warn("获取对话历史失败（可能表不存在）: {}", e.getMessage());
+                    // 继续执行，不影响AI响应
                 }
             }
             
-            // 使用本地AI逻辑
-            String aiResponse = generateLocalAiResponse(request.getQuestion());
+            // 优先使用智谱AI服务，如果不可用则降级到本地响应
+            String aiResponse = null;
+            if (zhipuAiService.isAvailable()) {
+                log.info("使用智谱AI服务处理咨询请求");
+                aiResponse = zhipuAiService.chat(request.getQuestion(), conversationHistory);
+            }
+            
+            // 如果AI服务调用失败，使用本地响应
+            if (aiResponse == null || aiResponse.isEmpty()) {
+                log.info("智谱AI服务不可用或调用失败，使用本地响应");
+                aiResponse = generateLocalAiResponse(request.getQuestion());
+            }
             
             // 解析推荐的体检项目
             List<String> recommendedExams = extractRecommendedExams(aiResponse);
@@ -63,17 +78,22 @@ public class AiConsultationService {
                 sessionId = generateSessionId();
             }
 
-            // 保存咨询记录
-            AiConsultation consultation = new AiConsultation();
-            consultation.setUserId(request.getUserId());
-            consultation.setUserQuestion(request.getQuestion());
-            consultation.setAiResponse(aiResponse);
-            consultation.setRecommendedExams(String.join(",", recommendedExams));
-            consultation.setSessionId(sessionId);
-            consultation.setStatus("active");
-            consultation.setCreateTime(new Date());
+            // 尝试保存咨询记录（如果表不存在则跳过）
+            try {
+                AiConsultation consultation = new AiConsultation();
+                consultation.setUserId(request.getUserId());
+                consultation.setUserQuestion(request.getQuestion());
+                consultation.setAiResponse(aiResponse);
+                consultation.setRecommendedExams(String.join(",", recommendedExams));
+                consultation.setSessionId(sessionId);
+                consultation.setStatus("active");
+                consultation.setCreateTime(new Date());
 
-            aiConsultationMapper.insert(consultation);
+                aiConsultationMapper.insert(consultation);
+            } catch (Exception e) {
+                log.warn("保存AI咨询记录失败（可能表不存在）: {}", e.getMessage());
+                // 继续执行，不影响AI响应返回
+            }
 
             // 构建响应
             AiConsultationResponse response = new AiConsultationResponse();
@@ -199,6 +219,35 @@ public class AiConsultationService {
      */
     public Integer getUserConsultationCount(Integer userId) {
         return aiConsultationMapper.countByUserId(userId);
+    }
+    
+    /**
+     * 保存流式对话记录
+     */
+    public void saveConsultation(Integer userId, String question, String response, String sessionId) {
+        try {
+            // 提取推荐的体检项目
+            List<String> recommendedExams = extractRecommendedExams(response);
+            
+            // 生成或使用现有的sessionId
+            if (sessionId == null || sessionId.isEmpty()) {
+                sessionId = generateSessionId();
+            }
+            
+            AiConsultation consultation = new AiConsultation();
+            consultation.setUserId(userId);
+            consultation.setUserQuestion(question);
+            consultation.setAiResponse(response);
+            consultation.setRecommendedExams(String.join(",", recommendedExams));
+            consultation.setSessionId(sessionId);
+            consultation.setStatus("active");
+            consultation.setCreateTime(new Date());
+            
+            aiConsultationMapper.insert(consultation);
+            log.info("保存流式对话记录成功，用户ID: {}, sessionId: {}", userId, sessionId);
+        } catch (Exception e) {
+            log.error("保存流式对话记录失败: {}", e.getMessage(), e);
+        }
     }
 
     /**

@@ -8,6 +8,7 @@ public class AiConsultationRequest {
     private String question;      // 用户问题
     private String sessionId;    // 会话ID（可选，用于上下文对话）
     private Integer userId;      // 用户ID
+    private String response;     // AI回复（用于保存流式对话记录）
     
     public AiConsultationRequest() {}
     
@@ -38,5 +39,13 @@ public class AiConsultationRequest {
     
     public void setUserId(Integer userId) {
         this.userId = userId;
+    }
+    
+    public String getResponse() {
+        return response;
+    }
+    
+    public void setResponse(String response) {
+        this.response = response;
     }
 }

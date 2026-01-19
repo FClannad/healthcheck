@@ -1,6 +1,6 @@
 package com.example.service;
 
-import com.example.common.config.RabbitMQConditionalConfig;
+import com.example.config.RabbitMQConditionalConfig;
 import com.rabbitmq.client.Channel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,6 +21,11 @@ import java.util.Map;
 /**
  * 消息服务类
  * 处理RabbitMQ消息的发送和接收
+ *
+ * 【未使用服务说明】
+ * 此服务依赖RabbitMQ，当前配置中RabbitMQ未启用(spring.rabbitmq.enabled=false)。
+ * 所有消息发送和接收方法在RabbitMQ未启用时不会被加载。
+ * 保留此服务以便后续启用消息队列功能。
  */
 @Service
 @ConditionalOnProperty(name = "spring.rabbitmq.enabled", havingValue = "true", matchIfMissing = false)

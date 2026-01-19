@@ -57,21 +57,23 @@ public class FeedbackController {
 
     /**
      * 单个查询
+     * 【未使用接口】前端未调用此接口，保留备用
      */
-    @GetMapping("/selectById/{id}")
-    public Result selectById(@PathVariable Integer id) {
-        Feedback feedback = feedbackService.selectById(id);
-        return Result.success(feedback);
-    }
+    // @GetMapping("/selectById/{id}")
+    // public Result selectById(@PathVariable Integer id) {
+    //     Feedback feedback = feedbackService.selectById(id);
+    //     return Result.success(feedback);
+    // }
 
     /**
      * 查询所有
+     * 【未使用接口】前端未调用此接口，保留备用
      */
-    @GetMapping("/selectAll")
-    public Result selectAll(Feedback feedback) {
-        List<Feedback> list = feedbackService.selectAll(feedback);
-        return Result.success(list);
-    }
+    // @GetMapping("/selectAll")
+    // public Result selectAll(Feedback feedback) {
+    //     List<Feedback> list = feedbackService.selectAll(feedback);
+    //     return Result.success(list);
+    // }
 
     /**
      * 分页查询

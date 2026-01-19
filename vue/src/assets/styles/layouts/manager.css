@@ -1,0 +1,779 @@
+/* ========================================
+   管理后台布局样式
+   ======================================== */
+
+/* ==================== 容器布局 ==================== */
+
+.manager-container {
+  min-height: 100vh;
+  background: var(--background-color);
+  display: flex;
+  flex-direction: column;
+}
+
+/* ==================== 白天模式白蓝主题 ==================== */
+
+.light-theme .manager-container,
+html:not(.dark-theme) .manager-container {
+  background: linear-gradient(180deg, #f0f7ff 0%, #e6f4ff 100%);
+}
+
+/* ==================== 顶部导航栏 ==================== */
+
+.manager-header {
+  height: 64px;
+  background: var(--background-white);
+  display: flex;
+  align-items: center;
+  padding: 0;
+  box-shadow: var(--shadow-sm);
+  border-bottom: 1px solid var(--border-lighter);
+  position: sticky;
+  top: 0;
+  z-index: var(--z-sticky);
+}
+
+/* 白天模式顶部导航栏白蓝渐变 */
+.light-theme .manager-header,
+html:not(.dark-theme) .manager-header {
+  background: linear-gradient(90deg, #ffffff 0%, #f8fafc 50%, #f0f7ff 100%);
+  border-bottom: 1px solid #e6f0fa;
+}
+
+/* 左侧品牌区域 */
+.manager-header-left {
+  display: flex;
+  align-items: center;
+  padding: 0 var(--spacing-lg);
+  min-width: 240px;
+  border-right: 1px solid var(--border-lighter);
+}
+
+.manager-header-left .logo {
+  width: 36px;
+  height: 36px;
+  border-radius: var(--border-radius-md);
+  margin-right: var(--spacing-md);
+}
+
+.manager-header-left .title {
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-semibold);
+  color: var(--text-primary);
+  background: var(--gradient-primary);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* 中间导航区域 */
+.manager-header-center {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  padding: 0 var(--spacing-md);
+  min-width: 0; /* 允许收缩 */
+  overflow-x: auto;
+  overflow-y: hidden;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.manager-header-center::-webkit-scrollbar {
+  display: none;
+}
+
+/* 右侧用户区域 */
+.manager-header-right {
+  display: flex;
+  align-items: center;
+  padding: 0 var(--spacing-lg);
+  gap: var(--spacing-md);
+  flex-shrink: 0; /* 防止右侧区域被压缩 */
+  margin-left: auto; /* 确保右侧区域靠右 */
+  position: relative;
+  z-index: 10; /* 确保在菜单之上 */
+  background: inherit; /* 继承背景色防止重叠时透明 */
+}
+
+.user-info {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  padding: var(--spacing-sm) var(--spacing-md);
+  border-radius: var(--border-radius-md);
+  cursor: pointer;
+  transition: background-color var(--duration-fast) var(--ease-out);
+}
+
+.user-info:hover {
+  background-color: var(--background-light);
+}
+
+.user-avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: var(--border-radius-round);
+  background: var(--gradient-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-inverse);
+  font-weight: var(--font-weight-medium);
+  font-size: var(--font-size-sm);
+}
+
+.user-details {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.user-name {
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+  color: var(--text-primary);
+  line-height: 1.2;
+}
+
+.user-role {
+  font-size: var(--font-size-xs);
+  color: var(--text-secondary);
+  line-height: 1.2;
+}
+
+/* 白天模式白蓝主题用户区域 */
+.light-theme .manager-header-right,
+html:not(.dark-theme) .manager-header-right {
+  background: linear-gradient(90deg, transparent 0%, #f8fafc 10%, #f0f7ff 100%);
+}
+
+.light-theme .user-info:hover,
+html:not(.dark-theme) .user-info:hover {
+  background-color: #e6f4ff;
+}
+
+.light-theme .user-avatar,
+html:not(.dark-theme) .user-avatar {
+  background: linear-gradient(135deg, #1890ff 0%, #40a9ff 100%);
+  box-shadow: 0 2px 8px rgba(24, 144, 255, 0.3);
+}
+
+.light-theme .user-name,
+html:not(.dark-theme) .user-name {
+  color: #1e293b;
+}
+
+.light-theme .user-role,
+html:not(.dark-theme) .user-role {
+  color: #64748b;
+}
+
+.theme-toggle {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  padding: var(--spacing-sm);
+  border-radius: var(--border-radius-md);
+  cursor: pointer;
+  transition: all var(--duration-fast) var(--ease-out);
+  margin-right: var(--spacing-sm);
+}
+
+.theme-toggle:hover {
+  background-color: var(--background-light);
+  transform: scale(1.05);
+}
+
+.notification-icon {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  padding: var(--spacing-sm);
+  border-radius: var(--border-radius-md);
+  cursor: pointer;
+  transition: all var(--duration-fast) var(--ease-out);
+}
+
+.notification-icon:hover {
+  background-color: var(--background-light);
+  transform: scale(1.05);
+}
+
+.notification-badge {
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  width: 8px;
+  height: 8px;
+  background: var(--error-color);
+  border-radius: var(--border-radius-round);
+  border: 2px solid var(--background-white);
+}
+
+/* 统一图标颜色控制 */
+.theme-toggle .el-icon,
+.notification-icon .el-icon {
+  color: var(--text-secondary) !important;
+  transition: color var(--duration-fast) var(--ease-out);
+}
+
+.theme-toggle:hover .el-icon,
+.notification-icon:hover .el-icon {
+  color: var(--text-primary) !important;
+}
+
+/* 白天模式白蓝主题图标样式 */
+.light-theme .theme-toggle:hover,
+html:not(.dark-theme) .theme-toggle:hover {
+  background-color: #e6f4ff;
+}
+
+.light-theme .notification-icon:hover,
+html:not(.dark-theme) .notification-icon:hover {
+  background-color: #e6f4ff;
+}
+
+.light-theme .theme-toggle .el-icon,
+.light-theme .notification-icon .el-icon,
+html:not(.dark-theme) .theme-toggle .el-icon,
+html:not(.dark-theme) .notification-icon .el-icon {
+  color: #64748b !important;
+}
+
+.light-theme .theme-toggle:hover .el-icon,
+.light-theme .notification-icon:hover .el-icon,
+html:not(.dark-theme) .theme-toggle:hover .el-icon,
+html:not(.dark-theme) .notification-icon:hover .el-icon {
+  color: #1890ff !important;
+}
+
+/* 确保夜间模式下图标样式一致 */
+.dark-theme .theme-toggle .el-icon,
+.dark-theme .notification-icon .el-icon {
+  color: var(--text-secondary) !important;
+}
+
+.dark-theme .theme-toggle:hover .el-icon,
+.dark-theme .notification-icon:hover .el-icon {
+  color: var(--text-primary) !important;
+}
+
+/* ==================== 主要内容区域 ==================== */
+
+.manager-main {
+  flex: 1;
+  display: flex;
+  min-height: calc(100vh - 64px);
+}
+
+.manager-main-content {
+  flex: 1;
+  padding: var(--spacing-lg);
+  background: var(--background-color);
+  overflow-y: auto;
+}
+
+/* ==================== 面包屑导航 ==================== */
+
+.breadcrumb-container {
+  margin-bottom: var(--spacing-lg);
+  padding: var(--spacing-md) 0;
+}
+
+.breadcrumb-container .el-breadcrumb {
+  font-size: var(--font-size-sm);
+}
+
+.breadcrumb-container .el-breadcrumb__item {
+  color: var(--text-secondary);
+}
+
+.breadcrumb-container .el-breadcrumb__item.is-link {
+  color: var(--primary-color);
+}
+
+.breadcrumb-container .el-breadcrumb__item:last-child {
+  color: var(--text-primary);
+  font-weight: var(--font-weight-medium);
+}
+
+/* ==================== 菜单样式重写 ==================== */
+
+.el-menu {
+  border: none !important;
+  background-color: transparent !important;
+}
+
+.el-menu--horizontal {
+  height: 64px;
+  line-height: 64px;
+  flex-wrap: nowrap !important;
+  overflow: visible !important;
+  min-width: max-content !important;
+}
+
+/* 强制禁用Element Plus的自动收缩功能 */
+.el-menu--horizontal .el-menu-item,
+.el-menu--horizontal .el-sub-menu {
+  display: flex !important;
+  visibility: visible !important;
+}
+
+/* 隐藏可能的省略号按钮 */
+.el-menu--horizontal .el-menu-item.is-disabled,
+.el-menu--horizontal .el-icon-more {
+  display: none !important;
+}
+
+/* 确保菜单容器不会触发收缩 */
+.main-menu {
+  width: 100% !important;
+  max-width: none !important;
+  overflow: visible !important;
+}
+
+.el-menu-item {
+  height: 64px !important;
+  line-height: 64px !important;
+  padding: 0 var(--spacing-lg) !important;
+  margin: 0 var(--spacing-xs);
+  border-radius: var(--border-radius-md);
+  color: var(--text-secondary) !important;
+  font-weight: var(--font-weight-medium);
+  transition: all var(--duration-fast) var(--ease-out) !important;
+  border-bottom: none !important;
+  white-space: nowrap !important;
+  flex-shrink: 0 !important;
+}
+
+.el-menu-item:hover {
+  background-color: var(--primary-lightest) !important;
+  color: var(--primary-color) !important;
+}
+
+.el-menu-item.is-active {
+  background-color: var(--primary-color) !important;
+  color: var(--text-inverse) !important;
+  box-shadow: var(--shadow-primary);
+}
+
+.el-menu-item .el-icon {
+  margin-right: var(--spacing-sm);
+  font-size: var(--font-size-lg);
+}
+
+/* 子菜单样式 */
+.el-sub-menu {
+  margin: 0 var(--spacing-xs);
+}
+
+.el-sub-menu__title {
+  height: 64px !important;
+  line-height: 64px !important;
+  padding: 0 var(--spacing-lg) !important;
+  border-radius: var(--border-radius-md);
+  color: var(--text-secondary) !important;
+  font-weight: var(--font-weight-medium);
+  transition: all var(--duration-fast) var(--ease-out) !important;
+  white-space: nowrap !important;
+  flex-shrink: 0 !important;
+}
+
+.el-sub-menu__title:hover {
+  background-color: var(--primary-lightest) !important;
+  color: var(--primary-color) !important;
+}
+
+.el-sub-menu.is-active .el-sub-menu__title {
+  color: var(--primary-color) !important;
+}
+
+.el-sub-menu__title .el-icon {
+  margin-right: var(--spacing-sm);
+  font-size: var(--font-size-lg);
+}
+
+/* 下拉菜单样式 */
+.el-menu--popup {
+  background: var(--background-white) !important;
+  border: 1px solid var(--border-light) !important;
+  border-radius: var(--border-radius-md) !important;
+  box-shadow: var(--shadow-lg) !important;
+  padding: var(--spacing-sm) 0;
+}
+
+.el-menu--popup .el-menu-item {
+  height: 40px !important;
+  line-height: 40px !important;
+  margin: 0 var(--spacing-sm);
+  border-radius: var(--border-radius-sm);
+}
+
+.el-menu--popup .el-menu-item:hover {
+  background-color: var(--primary-lightest) !important;
+}
+
+/* ==================== 白天模式白蓝主题菜单样式 ==================== */
+
+.light-theme .el-menu-item,
+html:not(.dark-theme) .el-menu-item {
+  color: #475569 !important;
+}
+
+.light-theme .el-menu-item:hover,
+html:not(.dark-theme) .el-menu-item:hover {
+  background-color: #e6f4ff !important;
+  color: #1890ff !important;
+}
+
+.light-theme .el-menu-item.is-active,
+html:not(.dark-theme) .el-menu-item.is-active {
+  background: linear-gradient(135deg, #1890ff 0%, #40a9ff 100%) !important;
+  color: #ffffff !important;
+  box-shadow: 0 4px 12px rgba(24, 144, 255, 0.3);
+}
+
+.light-theme .el-sub-menu__title,
+html:not(.dark-theme) .el-sub-menu__title {
+  color: #475569 !important;
+}
+
+.light-theme .el-sub-menu__title:hover,
+html:not(.dark-theme) .el-sub-menu__title:hover {
+  background-color: #e6f4ff !important;
+  color: #1890ff !important;
+}
+
+.light-theme .el-sub-menu.is-active .el-sub-menu__title,
+html:not(.dark-theme) .el-sub-menu.is-active .el-sub-menu__title {
+  color: #1890ff !important;
+}
+
+/* 白天模式下拉菜单 */
+.light-theme .el-menu--popup,
+html:not(.dark-theme) .el-menu--popup {
+  background: #ffffff !important;
+  border: 1px solid #e6f0fa !important;
+  box-shadow: 0 8px 24px rgba(24, 144, 255, 0.12) !important;
+}
+
+.light-theme .el-menu--popup .el-menu-item,
+html:not(.dark-theme) .el-menu--popup .el-menu-item {
+  color: #475569 !important;
+}
+
+.light-theme .el-menu--popup .el-menu-item:hover,
+html:not(.dark-theme) .el-menu--popup .el-menu-item:hover {
+  background-color: #e6f4ff !important;
+  color: #1890ff !important;
+}
+
+.light-theme .el-menu--popup .el-menu-item.is-active,
+html:not(.dark-theme) .el-menu--popup .el-menu-item.is-active {
+  background-color: #e6f4ff !important;
+  color: #1890ff !important;
+}
+
+/* ==================== 页面标题 ==================== */
+
+.page-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--spacing-xl);
+  padding-bottom: var(--spacing-lg);
+  border-bottom: 1px solid var(--border-lighter);
+}
+
+.page-title {
+  font-size: var(--font-size-xxl);
+  font-weight: var(--font-weight-semibold);
+  color: var(--text-primary);
+  margin: 0;
+}
+
+.page-subtitle {
+  font-size: var(--font-size-sm);
+  color: var(--text-secondary);
+  margin: var(--spacing-xs) 0 0 0;
+}
+
+.page-actions {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-md);
+}
+
+/* ==================== 卡片容器 ==================== */
+
+.content-card {
+  background: var(--background-white);
+  border-radius: var(--border-radius-lg);
+  box-shadow: var(--shadow-sm);
+  border: 1px solid var(--border-lighter);
+  overflow: hidden;
+  transition: box-shadow var(--duration-fast) var(--ease-out);
+}
+
+.content-card:hover {
+  box-shadow: var(--shadow-md);
+}
+
+.content-card-header {
+  padding: var(--spacing-lg) var(--spacing-xl);
+  border-bottom: 1px solid var(--border-lighter);
+  background: var(--background-light);
+}
+
+.content-card-body {
+  padding: var(--spacing-xl);
+}
+
+.content-card-footer {
+  padding: var(--spacing-lg) var(--spacing-xl);
+  border-top: 1px solid var(--border-lighter);
+  background: var(--background-light);
+}
+
+/* ==================== 白天模式白蓝主题卡片样式 ==================== */
+
+.light-theme .content-card,
+html:not(.dark-theme) .content-card {
+  background: #ffffff;
+  border: 1px solid #e6f0fa;
+  box-shadow: 0 2px 8px rgba(24, 144, 255, 0.08);
+}
+
+.light-theme .content-card:hover,
+html:not(.dark-theme) .content-card:hover {
+  box-shadow: 0 4px 16px rgba(24, 144, 255, 0.12);
+  border-color: #bae7ff;
+}
+
+.light-theme .content-card-header,
+html:not(.dark-theme) .content-card-header {
+  background: linear-gradient(180deg, #f8fafc 0%, #f0f7ff 100%);
+  border-bottom: 1px solid #e6f0fa;
+}
+
+.light-theme .content-card-footer,
+html:not(.dark-theme) .content-card-footer {
+  background: linear-gradient(180deg, #f0f7ff 0%, #f8fafc 100%);
+  border-top: 1px solid #e6f0fa;
+}
+
+/* ==================== 响应式设计 ==================== */
+
+@media (max-width: 1200px) {
+  .manager-header-left {
+    min-width: 200px;
+  }
+
+  .manager-header-left .title {
+    font-size: var(--font-size-base);
+  }
+
+  /* 确保菜单在中等屏幕上仍然完全展开 */
+  .manager-header-center {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .el-menu--horizontal {
+    justify-content: center;
+  }
+}
+
+@media (max-width: 992px) {
+  .manager-header {
+    height: 56px;
+  }
+  
+  .manager-header-left {
+    min-width: 160px;
+    padding: 0 var(--spacing-md);
+  }
+  
+  .manager-header-center {
+    padding: 0 var(--spacing-md);
+  }
+  
+  .manager-header-right {
+    padding: 0 var(--spacing-md);
+  }
+  
+  .el-menu--horizontal {
+    height: 56px;
+    line-height: 56px;
+  }
+  
+  .el-menu-item,
+  .el-sub-menu__title {
+    height: 56px !important;
+    line-height: 56px !important;
+    padding: 0 var(--spacing-md) !important;
+  }
+  
+  .manager-main-content {
+    padding: var(--spacing-md);
+  }
+}
+
+@media (max-width: 768px) {
+  .manager-header-left {
+    min-width: 120px;
+  }
+
+  .manager-header-left .title {
+    font-size: var(--font-size-sm);
+  }
+
+  .user-details {
+    display: none;
+  }
+
+  .manager-header-center {
+    overflow-x: auto;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+
+  .manager-header-center::-webkit-scrollbar {
+    display: none;
+  }
+
+  .el-menu--horizontal {
+    min-width: max-content;
+  }
+
+  .el-menu-item,
+  .el-sub-menu__title {
+    padding: 0 var(--spacing-sm) !important;
+    min-width: max-content;
+  }
+
+  .el-menu-item span,
+  .el-sub-menu__title span {
+    font-size: var(--font-size-xs);
+  }
+
+  .page-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--spacing-md);
+  }
+
+  .page-actions {
+    width: 100%;
+    justify-content: flex-end;
+  }
+}
+
+/* ==================== 暗色主题适配 ==================== */
+
+.dark-theme .manager-header,
+html.dark-theme .manager-header {
+  background: var(--background-white);
+  border-bottom-color: var(--border-color);
+}
+
+.dark-theme .manager-header-left,
+html.dark-theme .manager-header-left {
+  border-right-color: var(--border-color);
+}
+
+.dark-theme .content-card,
+html.dark-theme .content-card {
+  background: var(--background-white);
+  border-color: var(--border-color);
+}
+
+.dark-theme .content-card-header,
+.dark-theme .content-card-footer,
+html.dark-theme .content-card-header,
+html.dark-theme .content-card-footer {
+  background: var(--background-light);
+  border-color: var(--border-color);
+}
+
+/* 暗色主题菜单样式 */
+.dark-theme .el-menu-item,
+html.dark-theme .el-menu-item {
+  color: var(--text-secondary) !important;
+}
+
+.dark-theme .el-menu-item:hover,
+html.dark-theme .el-menu-item:hover {
+  background-color: var(--primary-lightest) !important;
+  color: var(--primary-light) !important;
+}
+
+.dark-theme .el-menu-item.is-active,
+html.dark-theme .el-menu-item.is-active {
+  background-color: var(--primary-color) !important;
+  color: var(--text-inverse) !important;
+}
+
+.dark-theme .el-sub-menu__title,
+html.dark-theme .el-sub-menu__title {
+  color: var(--text-secondary) !important;
+}
+
+.dark-theme .el-sub-menu__title:hover,
+html.dark-theme .el-sub-menu__title:hover {
+  background-color: var(--primary-lightest) !important;
+  color: var(--primary-light) !important;
+}
+
+/* 暗色主题下拉菜单 */
+.dark-theme .el-menu--popup,
+html.dark-theme .el-menu--popup {
+  background: var(--background-white) !important;
+  border-color: var(--border-color) !important;
+}
+
+.dark-theme .el-menu--popup .el-menu-item,
+html.dark-theme .el-menu--popup .el-menu-item {
+  color: var(--text-secondary) !important;
+}
+
+.dark-theme .el-menu--popup .el-menu-item:hover,
+html.dark-theme .el-menu--popup .el-menu-item:hover {
+  background-color: var(--primary-lightest) !important;
+  color: var(--primary-light) !important;
+}
+
+/* 暗色主题右侧区域背景 */
+.dark-theme .manager-header-right,
+html.dark-theme .manager-header-right {
+  background: linear-gradient(90deg, transparent 0%, var(--background-white) 10%, var(--background-white) 100%);
+}
+
+/* 暗色主题用户信息 */
+.dark-theme .user-info:hover,
+html.dark-theme .user-info:hover {
+  background-color: var(--background-light);
+}
+
+.dark-theme .user-name,
+html.dark-theme .user-name {
+  color: var(--text-primary);
+}
+
+.dark-theme .user-role,
+html.dark-theme .user-role {
+  color: var(--text-secondary);
+}
+
+/* 暗色主题通知徽章 */
+.dark-theme .notification-badge,
+html.dark-theme .notification-badge {
+  border-color: var(--background-white);
+}

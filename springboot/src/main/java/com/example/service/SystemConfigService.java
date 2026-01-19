@@ -12,6 +12,11 @@ import java.util.concurrent.ConcurrentHashMap;
 /**
  * 系统配置管理服务
  * 提供动态配置管理功能
+ *
+ * 【部分未使用说明】
+ * 此服务提供系统配置管理功能，但大部分方法未被Controller调用。
+ * 主要被ScheduledTaskService等内部服务使用。
+ * 保留此服务以便后续扩展配置管理功能。
  */
 @Service
 public class SystemConfigService {

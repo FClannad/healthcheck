@@ -99,11 +99,16 @@ public class DoctorService {
         doctorMapper.updateById(dbDoctor);
     }
 
+    /**
+     * 根据职称ID查询医生数量
+     */
     public Integer selectByTitleId(Integer titleId) {
         return doctorMapper.selectByTitleId(titleId);
-
     }
 
+    /**
+     * 根据科室ID查询医生数量
+     */
     public Integer selectByOfficeId(Integer officeId) {
         return doctorMapper.selectByOfficeId(officeId);
     }

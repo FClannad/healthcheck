@@ -57,21 +57,23 @@ public class ExaminationOrderController {
 
     /**
      * 单个查询
+     * 【未使用接口】前端未调用此接口，保留备用
      */
-    @GetMapping("/selectById/{id}")
-    public Result selectById(@PathVariable Integer id) {
-        ExaminationOrder examinationOrder = examinationOrderService.selectById(id);
-        return Result.success(examinationOrder);
-    }
+    // @GetMapping("/selectById/{id}")
+    // public Result selectById(@PathVariable Integer id) {
+    //     ExaminationOrder examinationOrder = examinationOrderService.selectById(id);
+    //     return Result.success(examinationOrder);
+    // }
 
     /**
      * 查询所有
+     * 【未使用接口】前端未调用此接口，保留备用
      */
-    @GetMapping("/selectAll")
-    public Result selectAll(ExaminationOrder examinationOrder) {
-        List<ExaminationOrder> list = examinationOrderService.selectAll(examinationOrder);
-        return Result.success(list);
-    }
+    // @GetMapping("/selectAll")
+    // public Result selectAll(ExaminationOrder examinationOrder) {
+    //     List<ExaminationOrder> list = examinationOrderService.selectAll(examinationOrder);
+    //     return Result.success(list);
+    // }
 
     /**
      * 分页查询
@@ -90,6 +92,16 @@ public class ExaminationOrderController {
         return Result.success(examinationOrders);
     }
 
-
+    /**
+     * 获取某医生某天的所有时间段及其预约状态
+     * @param doctorId 医生ID
+     * @param reserveDate 预约日期 (格式: YYYY-MM-DD)
+     * @return 时间段列表
+     */
+    @GetMapping("/timeSlots")
+    public Result getTimeSlots(@RequestParam Integer doctorId, @RequestParam String reserveDate) {
+        List<java.util.Map<String, Object>> timeSlots = examinationOrderService.getTimeSlots(doctorId, reserveDate);
+        return Result.success(timeSlots);
+    }
 
 }

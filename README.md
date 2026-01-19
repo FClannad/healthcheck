@@ -61,7 +61,7 @@ start-system.bat
 
 # 或手动启动
 cd springboot && mvn spring-boot:run
-cd vue/vue && npm run dev
+cd vue && npm run dev
 ```
 
 ### 4. 访问地址
@@ -367,5 +367,5 @@ services:
       - "80:80"
     volumes:
       - ./nginx.conf:/etc/nginx/nginx.conf
-      - ./vue/vue/dist:/usr/share/nginx/html
+      - ./vue/dist:/usr/share/nginx/html
 ```

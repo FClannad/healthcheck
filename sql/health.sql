@@ -42,6 +42,29 @@ INSERT INTO `accounts` VALUES (1,'userA',1000),(2,'userB',1000);
 UNLOCK TABLES;
 
 --
+-- Table structure for table `ai_consultation`
+--
+
+DROP TABLE IF EXISTS `ai_consultation`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `ai_consultation` (
+  `id` int NOT NULL AUTO_INCREMENT COMMENT '主键ID',
+  `user_id` int DEFAULT NULL COMMENT '用户ID',
+  `user_question` text COLLATE utf8mb4_unicode_ci COMMENT '用户问题',
+  `ai_response` text COLLATE utf8mb4_unicode_ci COMMENT 'AI回复',
+  `recommended_exams` varchar(500) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '推荐的体检项目',
+  `session_id` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '会话ID',
+  `status` varchar(20) COLLATE utf8mb4_unicode_ci DEFAULT 'active' COMMENT '状态：active, archived, deleted',
+  `create_time` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  PRIMARY KEY (`id`),
+  KEY `idx_user_id` (`user_id`),
+  KEY `idx_session_id` (`session_id`),
+  KEY `idx_create_time` (`create_time`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='AI咨询记录表';
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
 -- Table structure for table `admin`
 --
 

@@ -64,11 +64,10 @@ public class ExaminationOrderService {
             PhysicalExamination physicalExamination = physicalExaminationService.selectById(examinationId);
             examinationOrder.setMoney(physicalExamination.getMoney());
             examinationOrder.setDoctorId(physicalExamination.getDoctorId());
-        }else
-        {
+        } else {
             // 套餐体检
             // 判断当前是否存在相同项目待审批的订单
-            ExaminationOrder order = examinationOrderMapper.selectByExaminationIdAndOrderType(examinationOrder.getReserveDate(), examinationId, "普通体检", currentUser.getId());
+            ExaminationOrder order = examinationOrderMapper.selectByExaminationIdAndOrderType(examinationOrder.getReserveDate(), examinationId, "套餐体检", currentUser.getId());
             if (order != null) {
                 throw new CustomException("500", "您已经预约过该项目" + order.getReserveDate() + "的检查，请不要重复预约");
             }
@@ -154,5 +153,49 @@ public class ExaminationOrderService {
     public List<ExaminationOrder> selectScheduleData() {
         Account currentUser = TokenUtils.getCurrentUser();
         return examinationOrderMapper.selectPrepareOrders(currentUser.getId());
+    }
+
+    /**
+     * 获取某医生某天的所有时间段及其预约状态
+     * @param doctorId 医生ID
+     * @param reserveDate 预约日期
+     * @return 时间段列表，包含是否已被预约的状态
+     */
+    public List<java.util.Map<String, Object>> getTimeSlots(Integer doctorId, String reserveDate) {
+        // 定义工作时间段：08:00 - 18:00，每个时间段45分钟
+        List<java.util.Map<String, Object>> timeSlots = new ArrayList<>();
+        
+        // 查询该医生该天已预约的时间段
+        List<ExaminationOrder> bookedOrders = examinationOrderMapper.selectBookedTimeSlots(doctorId, reserveDate);
+        
+        // 生成所有时间段 (08:00-18:00, 每45分钟一个时间段)
+        String[] startTimes = {"08:00", "08:45", "09:30", "10:15", "11:00", "11:45",
+                               "13:00", "13:45", "14:30", "15:15", "16:00", "16:45", "17:30"};
+        String[] endTimes = {"08:45", "09:30", "10:15", "11:00", "11:45", "12:30",
+                             "13:45", "14:30", "15:15", "16:00", "16:45", "17:30", "18:15"};
+        
+        for (int i = 0; i < startTimes.length; i++) {
+            java.util.Map<String, Object> slot = new java.util.HashMap<>();
+            slot.put("startTime", startTimes[i]);
+            slot.put("endTime", endTimes[i]);
+            slot.put("label", startTimes[i] + " - " + endTimes[i]);
+            
+            // 检查该时间段是否已被预约
+            boolean isBooked = false;
+            String bookedUserName = null;
+            for (ExaminationOrder order : bookedOrders) {
+                if (startTimes[i].equals(order.getStartTime())) {
+                    isBooked = true;
+                    bookedUserName = order.getUserName();
+                    break;
+                }
+            }
+            slot.put("booked", isBooked);
+            slot.put("bookedUserName", bookedUserName);
+            
+            timeSlots.add(slot);
+        }
+        
+        return timeSlots;
     }
 }

@@ -21,6 +21,10 @@ import java.util.Map;
 /**
  * 系统监控控制器
  * 提供系统状态监控、缓存管理、任务管理等功能
+ *
+ * 【未使用接口说明】
+ * 此控制器的所有接口为后台管理接口，前端未调用。
+ * 保留用于系统监控和管理。
  */
 @RestController
 @RequestMapping("/system")
@@ -188,6 +192,7 @@ public class SystemMonitorController {
 
     /**
      * 手动触发定时任务
+     * 【未使用接口】前端未调用此接口，保留用于后台管理
      */
     @PostMapping("/task/trigger")
     public Result triggerTask(@RequestParam String taskType, @RequestParam(required = false) String param) {

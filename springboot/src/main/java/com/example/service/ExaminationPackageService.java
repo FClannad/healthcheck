@@ -1,6 +1,5 @@
 package com.example.service;
 
-import cn.hutool.core.date.DateUtil;
 import cn.hutool.json.JSONArray;
 import cn.hutool.json.JSONUtil;
 import com.example.entity.ExaminationPackage;
@@ -62,6 +61,10 @@ public class ExaminationPackageService {
         }
     }
 
+    /**
+     * 根据ID查询体检套餐
+     * 使用@Cacheable注解进行缓存，配合RedisConfig中的CacheErrorHandler处理缓存异常
+     */
     @Cacheable(value = "examinationPackages", key = "#id")
     public ExaminationPackage selectById(Integer id) {
         try {

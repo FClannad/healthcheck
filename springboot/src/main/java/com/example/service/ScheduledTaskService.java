@@ -15,6 +15,10 @@ import java.util.concurrent.atomic.AtomicInteger;
 /**
  * 定时任务服务
  * 处理系统的定期维护和自动化任务
+ *
+ * 【部分未使用说明】
+ * 此服务包含多个定时任务，在生产环境中自动执行。
+ * triggerManualCrawling()方法未被Controller调用，保留用于手动触发测试。
  */
 @Service
 public class ScheduledTaskService {
@@ -317,6 +321,7 @@ public class ScheduledTaskService {
 
     /**
      * 手动触发爬虫任务（用于测试）
+     * 【未使用方法】此方法被SystemMonitorController调用，但前端未调用该接口
      */
     public void triggerManualCrawling(String keyword) {
         try {

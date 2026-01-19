@@ -12,6 +12,13 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+/**
+ * 用户批量操作服务
+ *
+ * 【未使用服务说明】
+ * 此服务用于批量生成和插入用户数据，主要用于性能测试。
+ * 目前没有Controller调用此服务，保留备用。
+ */
 @Service
 public class UserBulkService {
 

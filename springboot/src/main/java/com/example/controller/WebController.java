@@ -101,12 +101,12 @@ public class WebController {
         List<ExaminationOrder> examinationorders = examinationOrderMapper.selectAll(null);
         // 普通体检金额统计
         Integer physicalExaminationMoney = examinationorders.stream().filter(o -> o.getOrderType().equals("普通体检"))
-                .filter(o -> o.getStatus().equals("待检査")|| o.getStatus().equals("待上传报告")|| o.getStatus().equals("已完成"))
+                .filter(o -> o.getStatus().equals("待检查")|| o.getStatus().equals("待上传报告")|| o.getStatus().equals("已完成"))
                 .map(ExaminationOrder::getMoney).reduce(Integer::sum).orElse(0);
 
         // 套餐体检金额统计
         Integer examinationPackageMoney = examinationorders.stream().filter(o -> o.getOrderType().equals("套餐体检"))
-                .filter(o -> o.getStatus().equals("待检査")|| o.getStatus().equals("待上传报告")|| o.getStatus().equals("已完成"))
+                .filter(o -> o.getStatus().equals("待检查")|| o.getStatus().equals("待上传报告")|| o.getStatus().equals("已完成"))
                 .map(ExaminationOrder::getMoney).reduce(Integer::sum).orElse(0);
 
         // 普通体检订单数量统计

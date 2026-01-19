@@ -67,7 +67,7 @@ echo 🎨 启动Vue前端服务...
 echo 端口: 5173
 echo 访问地址: http://localhost:5173
 echo.
-start "健康体检系统-前端" cmd /k "cd /d %~dp0vue\vue && npm run dev"
+start "健康体检系统-前端" cmd /k "cd /d %~dp0vue && npm run dev"
 
 :: 等待前端启动
 echo ⏳ 等待前端服务启动...

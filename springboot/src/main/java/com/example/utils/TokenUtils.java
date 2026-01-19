@@ -78,5 +78,23 @@ public class TokenUtils {
         }
         return null;
     }
+    
+    /**
+     * 从token字符串中获取用户ID
+     * 用于SSE等不支持Header的场景
+     */
+    public static Integer getUserIdFromToken(String token) {
+        try {
+            if (token == null || token.isEmpty()) {
+                return null;
+            }
+            String audience = JWT.decode(token).getAudience().get(0);
+            String[] userRole = audience.split("-");
+            return Integer.valueOf(userRole[0]);
+        } catch (Exception e) {
+            log.error("从token获取用户ID出错", e);
+            return null;
+        }
+    }
 
 }

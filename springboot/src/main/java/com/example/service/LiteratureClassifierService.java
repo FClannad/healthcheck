@@ -11,6 +11,14 @@ import java.util.regex.Pattern;
 /**
  * 医疗文献智能分类服务
  * 基于关键词和内容自动分类文献
+ *
+ * 【部分未使用说明】
+ * 此服务提供文献分类功能，主要方法classifyLiterature()被爬虫流程调用。
+ * 以下方法未被外部调用：
+ * - classifyLiteratures() - 批量分类
+ * - addCategoryRule() - 添加分类规则
+ * - getCategoryStatistics() - 获取分类统计
+ * 保留完整功能以便后续扩展。
  */
 @Service
 public class LiteratureClassifierService {

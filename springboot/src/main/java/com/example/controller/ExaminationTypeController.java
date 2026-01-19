@@ -57,12 +57,13 @@ public class ExaminationTypeController {
 
     /**
      * 单个查询
+     * 【未使用接口】前端未调用此接口，保留备用
      */
-    @GetMapping("/selectById/{id}")
-    public Result selectById(@PathVariable Integer id) {
-        ExaminationType examinationType = examinationTypeService.selectById(id);
-        return Result.success(examinationType);
-    }
+    // @GetMapping("/selectById/{id}")
+    // public Result selectById(@PathVariable Integer id) {
+    //     ExaminationType examinationType = examinationTypeService.selectById(id);
+    //     return Result.success(examinationType);
+    // }
 
     /**
      * 查询所有

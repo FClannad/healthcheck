@@ -12,6 +12,11 @@ import java.util.concurrent.atomic.AtomicLong;
 /**
  * 爬虫性能监控服务
  * 跟踪和分析爬虫性能指标
+ *
+ * 【部分未使用说明】
+ * 此服务提供爬虫性能监控功能，被MetricsAdapter调用。
+ * 部分方法如getPerformanceTrends()、resetMetrics()未被外部调用。
+ * 保留完整功能以便后续扩展监控能力。
  */
 @Service
 public class CrawlerMetricsService {

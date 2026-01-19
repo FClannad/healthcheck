@@ -74,4 +74,13 @@ public interface ExaminationOrderMapper {
      */
     @Select("select doctor_id, count(*) as order_count from `examination_order` where status in ('待审批', '已审批', '待上传报告') group by doctor_id")
     List<Object[]> getDoctorWorkloadStats();
+
+    /**
+     * 查询某医生某天的已预约时间段
+     * @param doctorId 医生ID
+     * @param reserveDate 预约日期
+     * @return 已预约的订单列表
+     */
+    @Select("select * from `examination_order` where doctor_id = #{doctorId} and reserve_date = #{reserveDate} and status not in ('已取消', '审批拒绝')")
+    List<ExaminationOrder> selectBookedTimeSlots(@Param("doctorId") Integer doctorId, @Param("reserveDate") String reserveDate);
 }

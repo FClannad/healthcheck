@@ -16,6 +16,11 @@ import java.util.stream.Collectors;
 /**
  * 数据统计服务
  * 提供系统各种数据的统计分析功能
+ *
+ * 【未使用服务说明】
+ * 此服务提供系统统计功能，但目前没有Controller调用这些方法。
+ * 前端DataAnalysis.vue使用的是其他接口(/getCountData, /lineData, /pieData, /barData)。
+ * 保留此服务以便后续扩展统计功能。
  */
 @Service
 public class StatisticsService {
