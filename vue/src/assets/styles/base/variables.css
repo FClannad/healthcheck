@@ -1,0 +1,337 @@
+/* ========================================
+   智慧医疗健康管理平台 - 设计变量
+   ======================================== */
+
+:root {
+  /* ==================== 颜色系统 ==================== */
+  
+  /* 主色调 - 医疗蓝色（白蓝主题） */
+  --primary-color: #1890ff;
+  --primary-light: #40a9ff;
+  --primary-lighter: #69c0ff;
+  --primary-lightest: #e6f4ff;
+  --primary-dark: #096dd9;
+  --primary-darker: #0050b3;
+  
+  /* 辅助色 */
+  --secondary-color: #52c41a;
+  --accent-color: #722ed1;
+  
+  /* 语义色 */
+  --success-color: #52c41a;
+  --success-light: #73d13d;
+  --success-lighter: #95de64;
+  --success-lightest: #b7eb8f;
+  
+  --warning-color: #faad14;
+  --warning-light: #ffc53d;
+  --warning-lighter: #ffd666;
+  --warning-lightest: #ffe58f;
+  
+  --error-color: #ff4d4f;
+  --error-light: #ff7875;
+  --error-lighter: #ff9c9e;
+  --error-lightest: #ffa39e;
+  
+  --info-color: #1890ff;
+  --info-light: #40a9ff;
+  --info-lighter: #69c0ff;
+  --info-lightest: #e6f4ff;
+  
+  /* 中性色 - 带蓝色调 */
+  --gray-1: #ffffff;
+  --gray-2: #f8fafc;
+  --gray-3: #f1f5f9;
+  --gray-4: #e2e8f0;
+  --gray-5: #cbd5e1;
+  --gray-6: #94a3b8;
+  --gray-7: #64748b;
+  --gray-8: #475569;
+  --gray-9: #1e293b;
+  --gray-10: #0f172a;
+  
+  /* 文本颜色 - 带蓝色调 */
+  --text-primary: #1e293b;
+  --text-secondary: #475569;
+  --text-tertiary: #64748b;
+  --text-disabled: #94a3b8;
+  --text-inverse: #ffffff;
+  
+  /* 背景颜色 - 白蓝色调 */
+  --background-color: #f0f7ff;
+  --background-white: #ffffff;
+  --background-light: #f8fafc;
+  --background-dark: #1e293b;
+  
+  /* 边框颜色 - 带蓝色调 */
+  --border-color: #cbd5e1;
+  --border-light: #e6f0fa;
+  --border-dark: #94a3b8;
+  --border-lighter: #e2e8f0;
+  
+  /* 医疗健康状态颜色 */
+  --health-excellent: #52c41a;
+  --health-good: #1890ff;
+  --health-normal: #faad14;
+  --health-attention: #ff7a45;
+  --health-danger: #ff4d4f;
+  
+  /* ==================== 字体系统 ==================== */
+  
+  /* 字体家族 */
+  --font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans', sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+  --font-family-mono: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, Courier, monospace;
+  
+  /* 字体大小 */
+  --font-size-xs: 12px;
+  --font-size-sm: 14px;
+  --font-size-base: 16px;
+  --font-size-lg: 18px;
+  --font-size-xl: 20px;
+  --font-size-xxl: 24px;
+  --font-size-xxxl: 32px;
+  --font-size-display: 48px;
+  
+  /* 字体权重 */
+  --font-weight-light: 300;
+  --font-weight-normal: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
+  
+  /* 行高 */
+  --line-height-tight: 1.25;
+  --line-height-normal: 1.5;
+  --line-height-relaxed: 1.75;
+  --line-height-loose: 2;
+  
+  /* 字间距 */
+  --letter-spacing-tight: -0.02em;
+  --letter-spacing-normal: 0;
+  --letter-spacing-wide: 0.02em;
+  
+  /* ==================== 间距系统 ==================== */
+  
+  --spacing-xs: 4px;
+  --spacing-sm: 8px;
+  --spacing-md: 16px;
+  --spacing-lg: 24px;
+  --spacing-xl: 32px;
+  --spacing-xxl: 48px;
+  --spacing-section: 64px;
+  --spacing-page: 96px;
+  
+  /* ==================== 边框半径 ==================== */
+  
+  --border-radius-xs: 2px;
+  --border-radius-sm: 4px;
+  --border-radius-md: 8px;
+  --border-radius-lg: 12px;
+  --border-radius-xl: 16px;
+  --border-radius-xxl: 24px;
+  --border-radius-full: 9999px;
+  
+  /* ==================== 阴影系统 ==================== */
+  
+  --shadow-xs: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --shadow-sm: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  --shadow-2xl: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+  
+  /* 彩色阴影 */
+  --shadow-primary: 0 4px 12px rgba(24, 144, 255, 0.15);
+  --shadow-success: 0 4px 12px rgba(82, 196, 26, 0.15);
+  --shadow-warning: 0 4px 12px rgba(250, 173, 20, 0.15);
+  --shadow-error: 0 4px 12px rgba(255, 77, 79, 0.15);
+  
+  /* ==================== 过渡和动画 ==================== */
+  
+  /* 过渡时长 */
+  --duration-fastest: 150ms;
+  --duration-fast: 200ms;
+  --duration-normal: 300ms;
+  --duration-slow: 500ms;
+  --duration-slowest: 700ms;
+  
+  /* 缓动函数 */
+  --ease-in: cubic-bezier(0.4, 0, 1, 1);
+  --ease-out: cubic-bezier(0, 0, 0.2, 1);
+  --ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
+  --ease-spring: cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  
+  /* ==================== 渐变 ==================== */
+  
+  /* 白蓝主题渐变 */
+  --gradient-primary: linear-gradient(135deg, #1890ff 0%, #40a9ff 100%);
+  --gradient-success: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+  --gradient-warning: linear-gradient(135deg, #f2994a 0%, #f2c94c 100%);
+  --gradient-error: linear-gradient(135deg, #eb3349 0%, #f45c43 100%);
+  --gradient-info: linear-gradient(135deg, #1890ff 0%, #69c0ff 100%);
+  --gradient-dark: linear-gradient(135deg, #1e293b 0%, #334155 100%);
+  --gradient-light: linear-gradient(135deg, #f8fafc 0%, #e6f4ff 100%);
+  
+  /* 白蓝主题特殊渐变 */
+  --gradient-header: linear-gradient(135deg, #ffffff 0%, #f0f7ff 100%);
+  --gradient-card: linear-gradient(180deg, #ffffff 0%, #f8fafc 100%);
+  --gradient-sidebar: linear-gradient(180deg, #f0f7ff 0%, #e6f4ff 100%);
+  
+  /* ==================== Z-index层级 ==================== */
+  
+  --z-dropdown: 1000;
+  --z-sticky: 1020;
+  --z-fixed: 1030;
+  --z-modal-backdrop: 1040;
+  --z-modal: 1050;
+  --z-popover: 1060;
+  --z-tooltip: 1070;
+  --z-toast: 1080;
+  --z-notification: 1090;
+  --z-top: 9999;
+  
+  /* ==================== 布局 ==================== */
+  
+  --container-sm: 640px;
+  --container-md: 768px;
+  --container-lg: 1024px;
+  --container-xl: 1280px;
+  --container-2xl: 1536px;
+  
+  --header-height: 64px;
+  --sidebar-width: 240px;
+  --footer-height: 64px;
+  
+  /* ==================== 响应式断点 ==================== */
+  
+  --breakpoint-xs: 480px;
+  --breakpoint-sm: 576px;
+  --breakpoint-md: 768px;
+  --breakpoint-lg: 992px;
+  --breakpoint-xl: 1200px;
+  --breakpoint-xxl: 1600px;
+  
+  /* ==================== 医疗主题变量 ==================== */
+  
+  --medical-primary: #1890ff;
+  --medical-secondary: #52c41a;
+  --medical-accent: #722ed1;
+  --medical-calm: #13c2c2;
+  --medical-warm: #fa8c16;
+  
+  /* ==================== 组件变量 ==================== */
+  
+  /* 按钮 */
+  --button-height-sm: 32px;
+  --button-height-md: 40px;
+  --button-height-lg: 48px;
+  --button-padding-horizontal-sm: 16px;
+  --button-padding-horizontal-md: 24px;
+  --button-padding-horizontal-lg: 32px;
+  
+  /* 输入框 */
+  --input-height-sm: 32px;
+  --input-height-md: 40px;
+  --input-height-lg: 48px;
+  --input-padding-horizontal: 16px;
+  
+  /* 卡片 */
+  --card-padding: 24px;
+  --card-radius: 12px;
+  
+  /* 模态框 */
+  --modal-padding: 24px;
+  --modal-radius: 12px;
+  
+  /* ==================== 性能优化 ==================== */
+  
+  --will-change-transform: transform;
+  --will-change-opacity: opacity;
+  --backface-hidden: hidden;
+  --perspective-1000: 1000px;
+}
+
+/* ==================== 暗色主题支持 ==================== */
+
+/* 通过类名切换暗色主题 */
+.dark-theme,
+html.dark-theme {
+  --text-primary: #e5e5e5;
+  --text-secondary: #a3a3a3;
+  --text-tertiary: #737373;
+  --text-disabled: #525252;
+  --text-inverse: #171717;
+  
+  --background-color: #0a0a0a;
+  --background-white: #171717;
+  --background-light: #262626;
+  --background-dark: #fafafa;
+  
+  --border-color: #404040;
+  --border-light: #262626;
+  --border-dark: #525252;
+  --border-lighter: #333333;
+  
+  /* 主色调调整 - 暗色模式下更亮 */
+  --primary-color: #3b82f6;
+  --primary-light: #60a5fa;
+  --primary-lighter: #93c5fd;
+  --primary-lightest: #1e3a5f;
+  --primary-dark: #2563eb;
+  --primary-darker: #1d4ed8;
+  
+  /* 语义色调整 */
+  --success-color: #22c55e;
+  --warning-color: #f59e0b;
+  --error-color: #ef4444;
+  --info-color: #3b82f6;
+  
+  /* 阴影调整 */
+  --shadow-xs: 0 1px 2px 0 rgba(0, 0, 0, 0.3);
+  --shadow-sm: 0 1px 3px 0 rgba(0, 0, 0, 0.4), 0 1px 2px 0 rgba(0, 0, 0, 0.3);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.4), 0 2px 4px -1px rgba(0, 0, 0, 0.3);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.4), 0 4px 6px -2px rgba(0, 0, 0, 0.3);
+  --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.4), 0 10px 10px -5px rgba(0, 0, 0, 0.3);
+  
+  /* 彩色阴影 */
+  --shadow-primary: 0 4px 12px rgba(59, 130, 246, 0.25);
+  --shadow-success: 0 4px 12px rgba(34, 197, 94, 0.25);
+  --shadow-warning: 0 4px 12px rgba(245, 158, 11, 0.25);
+  --shadow-error: 0 4px 12px rgba(239, 68, 68, 0.25);
+  
+  /* 渐变调整 */
+  --gradient-primary: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%);
+  --gradient-dark: linear-gradient(135deg, #1f2937 0%, #374151 100%);
+}
+
+/* 系统偏好暗色模式 */
+@media (prefers-color-scheme: dark) {
+  :root:not(.light-theme) {
+    --text-primary: #e5e5e5;
+    --text-secondary: #a3a3a3;
+    --text-tertiary: #737373;
+    --text-disabled: #525252;
+    --text-inverse: #171717;
+    
+    --background-color: #0a0a0a;
+    --background-white: #171717;
+    --background-light: #262626;
+    --background-dark: #fafafa;
+    
+    --border-color: #404040;
+    --border-light: #262626;
+    --border-dark: #525252;
+    --border-lighter: #333333;
+  }
+}
+
+/* ==================== 打印模式 ==================== */
+
+@media print {
+  :root {
+    --primary-color: #000000;
+    --text-primary: #000000;
+    --background-color: #ffffff;
+    --background-white: #ffffff;
+  }
+}

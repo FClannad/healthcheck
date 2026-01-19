@@ -1,0 +1,214 @@
+/* ========================================
+   医生管理页面轻量级样式优化
+   ======================================== */
+
+/* 保持原有布局，只进行细微的视觉优化 */
+
+/* ==================== 卡片优化 ==================== */
+.card {
+  border-radius: 8px !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06) !important;
+  border: 1px solid #f0f0f0 !important;
+  transition: all 0.3s ease;
+}
+
+.card:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1) !important;
+}
+
+/* ==================== 表格优化 ==================== */
+.el-table {
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.el-table .el-table__header-wrapper {
+  background: #fafafa;
+}
+
+.el-table .el-table__header th {
+  background: #fafafa !important;
+  color: #333;
+  font-weight: 600;
+  border-bottom: 2px solid #e8e8e8;
+}
+
+.el-table .el-table__row:hover {
+  background-color: #f8f9ff !important;
+}
+
+/* ==================== 按钮优化 ==================== */
+.el-button {
+  border-radius: 6px;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+.el-button--primary {
+  background: linear-gradient(135deg, #1890ff 0%, #40a9ff 100%);
+  border: none;
+}
+
+.el-button--primary:hover {
+  background: linear-gradient(135deg, #40a9ff 0%, #69c0ff 100%);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(24, 144, 255, 0.3);
+}
+
+.el-button--info {
+  background: #f5f5f5;
+  color: #666;
+  border: 1px solid #d9d9d9;
+}
+
+.el-button--info:hover {
+  background: #e6f7ff;
+  color: #1890ff;
+  border-color: #1890ff;
+}
+
+.el-button--warning {
+  background: #fff7e6;
+  color: #fa8c16;
+  border: 1px solid #ffd591;
+}
+
+.el-button--warning:hover {
+  background: #fa8c16;
+  color: white;
+}
+
+.el-button--danger {
+  background: #fff2f0;
+  color: #ff4d4f;
+  border: 1px solid #ffccc7;
+}
+
+.el-button--danger:hover {
+  background: #ff4d4f;
+  color: white;
+}
+
+/* ==================== 输入框和选择器优化 ==================== */
+.el-input__wrapper,
+.el-select__wrapper {
+  border-radius: 6px;
+  transition: all 0.3s ease;
+}
+
+.el-input__wrapper:hover,
+.el-select__wrapper:hover {
+  border-color: #40a9ff;
+}
+
+.el-input__wrapper.is-focus,
+.el-select__wrapper.is-focus {
+  border-color: #1890ff;
+  box-shadow: 0 0 0 2px rgba(24, 144, 255, 0.1);
+}
+
+/* ==================== 头像优化 ==================== */
+.el-image {
+  border: 2px solid #f0f0f0;
+  transition: all 0.3s ease;
+}
+
+.el-image:hover {
+  border-color: #1890ff;
+  transform: scale(1.05);
+}
+
+/* ==================== 分页优化 ==================== */
+.el-pagination {
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.el-pagination .el-pager li {
+  border-radius: 4px;
+  margin: 0 2px;
+}
+
+.el-pagination .el-pager li.is-active {
+  background: linear-gradient(135deg, #1890ff 0%, #40a9ff 100%);
+  color: white;
+}
+
+/* ==================== 对话框优化 ==================== */
+.el-dialog {
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.el-dialog__header {
+  background: linear-gradient(135deg, #f8f9ff 0%, #f0f5ff 100%);
+  padding: 20px 24px;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.el-dialog__title {
+  color: #1890ff;
+  font-weight: 600;
+}
+
+.el-dialog__body {
+  padding: 24px;
+}
+
+/* ==================== 表单优化 ==================== */
+.el-form-item__label {
+  color: #333;
+  font-weight: 500;
+}
+
+.el-upload {
+  border-radius: 6px;
+}
+
+.el-upload .el-button {
+  border-radius: 6px;
+}
+
+/* ==================== 响应式优化 ==================== */
+@media (max-width: 768px) {
+  .card {
+    margin-bottom: 10px !important;
+    padding: 15px !important;
+  }
+
+  .el-button {
+    margin-bottom: 8px;
+  }
+
+  .el-input,
+  .el-select {
+    margin-bottom: 10px;
+  }
+}
+
+/* ==================== 动画效果 ==================== */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.card {
+  animation: fadeInUp 0.5s ease-out;
+}
+
+/* ==================== 加载状态 ==================== */
+.el-loading-mask {
+  background-color: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(2px);
+  -webkit-backdrop-filter: blur(2px);
+}
+
+.el-loading-spinner {
+  color: #1890ff;
+}

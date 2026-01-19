@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>健康体检系统集成测试</title>
+    <style>
+        body {
+            font-family: 'Microsoft YaHei', Arial, sans-serif;
+            margin: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #2c3e50;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .test-section {
+            margin: 20px 0;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            background: #fafafa;
+        }
+        .test-section h3 {
+            color: #34495e;
+            margin-top: 0;
+        }
+        button {
+            background: #3498db;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 5px;
+            font-size: 14px;
+        }
+        button:hover {
+            background: #2980b9;
+        }
+        button:disabled {
+            background: #bdc3c7;
+            cursor: not-allowed;
+        }
+        .success {
+            background: #27ae60 !important;
+        }
+        .error {
+            background: #e74c3c !important;
+        }
+        .result {
+            margin: 10px 0;
+            padding: 10px;
+            border-radius: 3px;
+            font-family: monospace;
+            font-size: 12px;
+            white-space: pre-wrap;
+            max-height: 200px;
+            overflow-y: auto;
+        }
+        .result.success {
+            background: #d5f4e6;
+            border: 1px solid #27ae60;
+            color: #27ae60;
+        }
+        .result.error {
+            background: #fdf2f2;
+            border: 1px solid #e74c3c;
+            color: #e74c3c;
+        }
+        .result.info {
+            background: #e8f4fd;
+            border: 1px solid #3498db;
+            color: #2980b9;
+        }
+        .status {
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: 3px;
+            font-size: 12px;
+            font-weight: bold;
+        }
+        .status.online {
+            background: #d5f4e6;
+            color: #27ae60;
+        }
+        .status.offline {
+            background: #fdf2f2;
+            color: #e74c3c;
+        }
+        .tech-stack {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+        .tech-item {
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            text-align: center;
+        }
+        .tech-item h4 {
+            margin: 0 0 10px 0;
+            color: #2c3e50;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🏥 健康体检系统集成测试</h1>
+        
+        <div class="tech-stack">
+            <div class="tech-item">
+                <h4>🌐 Spring Boot 后端</h4>
+                <span id="backend-status" class="status offline">离线</span>
+                <button onclick="testBackend()">测试连接</button>
+            </div>
+            <div class="tech-item">
+                <h4>🎨 Vue 前端</h4>
+                <span id="frontend-status" class="status offline">离线</span>
+                <button onclick="testFrontend()">测试连接</button>
+            </div>
+            <div class="tech-item">
+                <h4>🐰 RabbitMQ</h4>
+                <span id="rabbitmq-status" class="status offline">离线</span>
+                <button onclick="testRabbitMQ()">测试连接</button>
+            </div>
+            <div class="tech-item">
+                <h4>📦 Redis</h4>
+                <span id="redis-status" class="status offline">离线</span>
+                <button onclick="testRedis()">测试连接</button>
+            </div>
+            <div class="tech-item">
+                <h4>🕷️ 爬虫服务</h4>
+                <span id="crawler-status" class="status offline">离线</span>
+                <button onclick="testCrawler()">测试爬虫</button>
+            </div>
+            <div class="tech-item">
+                <h4>☁️ Spring Cloud</h4>
+                <span id="cloud-status" class="status offline">离线</span>
+                <button onclick="testSpringCloud()">测试微服务</button>
+            </div>
+        </div>
+
+        <div class="test-section">
+            <h3>🔧 系统功能测试</h3>
+            <button onclick="testLogin()">测试登录</button>
+            <button onclick="testUserManagement()">测试用户管理</button>
+            <button onclick="testExamination()">测试体检功能</button>
+            <button onclick="testMedicalLiterature()">测试医疗文献</button>
+            <button onclick="runFullTest()">运行完整测试</button>
+        </div>
+
+        <div class="test-section">
+            <h3>📊 测试结果</h3>
+            <div id="test-results"></div>
+        </div>
+    </div>
+
+    <script>
+        const API_BASE = 'http://localhost:9090';
+        
+        function addResult(message, type = 'info') {
+            const resultsDiv = document.getElementById('test-results');
+            const resultDiv = document.createElement('div');
+            resultDiv.className = `result ${type}`;
+            resultDiv.textContent = `[${new Date().toLocaleTimeString()}] ${message}`;
+            resultsDiv.appendChild(resultDiv);
+            resultsDiv.scrollTop = resultsDiv.scrollHeight;
+        }
+
+        function updateStatus(elementId, isOnline) {
+            const element = document.getElementById(elementId);
+            element.className = `status ${isOnline ? 'online' : 'offline'}`;
+            element.textContent = isOnline ? '在线' : '离线';
+        }
+
+        async function testBackend() {
+            try {
+                addResult('测试后端连接...', 'info');
+                const response = await fetch(`${API_BASE}/actuator/health`, {
+                    method: 'GET',
+                    headers: { 'Content-Type': 'application/json' }
+                });
+                
+                if (response.ok) {
+                    const data = await response.json();
+                    updateStatus('backend-status', true);
+                    addResult(`后端服务正常: ${JSON.stringify(data)}`, 'success');
+                } else {
+                    throw new Error(`HTTP ${response.status}`);
+                }
+            } catch (error) {
+                updateStatus('backend-status', false);
+                addResult(`后端连接失败: ${error.message}`, 'error');
+            }
+        }
+
+        async function testFrontend() {
+            try {
+                addResult('测试前端连接...', 'info');
+                // 简单测试前端是否可访问
+                const response = await fetch('http://localhost:5173', { mode: 'no-cors' });
+                updateStatus('frontend-status', true);
+                addResult('前端服务正常运行', 'success');
+            } catch (error) {
+                updateStatus('frontend-status', false);
+                addResult(`前端连接失败: ${error.message}`, 'error');
+            }
+        }
+
+        async function testRabbitMQ() {
+            try {
+                addResult('测试RabbitMQ连接...', 'info');
+                const response = await fetch(`${API_BASE}/actuator/health`, {
+                    method: 'GET',
+                    headers: { 'Content-Type': 'application/json' }
+                });
+                
+                if (response.ok) {
+                    const data = await response.json();
+                    const rabbitHealth = data.components?.rabbit || data.rabbit;
+                    if (rabbitHealth && rabbitHealth.status === 'UP') {
+                        updateStatus('rabbitmq-status', true);
+                        addResult('RabbitMQ连接正常', 'success');
+                    } else {
+                        throw new Error('RabbitMQ健康检查失败');
+                    }
+                } else {
+                    throw new Error(`HTTP ${response.status}`);
+                }
+            } catch (error) {
+                updateStatus('rabbitmq-status', false);
+                addResult(`RabbitMQ连接失败: ${error.message}`, 'error');
+            }
+        }
+
+        async function testRedis() {
+            try {
+                addResult('测试Redis连接...', 'info');
+                const response = await fetch(`${API_BASE}/actuator/health`, {
+                    method: 'GET',
+                    headers: { 'Content-Type': 'application/json' }
+                });
+                
+                if (response.ok) {
+                    const data = await response.json();
+                    const redisHealth = data.components?.redis || data.redis;
+                    if (redisHealth && redisHealth.status === 'UP') {
+                        updateStatus('redis-status', true);
+                        addResult('Redis连接正常', 'success');
+                    } else {
+                        throw new Error('Redis健康检查失败');
+                    }
+                } else {
+                    throw new Error(`HTTP ${response.status}`);
+                }
+            } catch (error) {
+                updateStatus('redis-status', false);
+                addResult(`Redis连接失败: ${error.message}`, 'error');
+            }
+        }
+
+        async function testCrawler() {
+            try {
+                addResult('测试爬虫服务...', 'info');
+                const response = await fetch(`${API_BASE}/medical-literature/crawl`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        keyword: '人工智能',
+                        count: 3
+                    })
+                });
+                
+                if (response.ok) {
+                    const data = await response.json();
+                    updateStatus('crawler-status', true);
+                    addResult(`爬虫测试成功: ${JSON.stringify(data)}`, 'success');
+                } else {
+                    throw new Error(`HTTP ${response.status}`);
+                }
+            } catch (error) {
+                updateStatus('crawler-status', false);
+                addResult(`爬虫测试失败: ${error.message}`, 'error');
+            }
+        }
+
+        async function testSpringCloud() {
+            try {
+                addResult('测试Spring Cloud微服务...', 'info');
+                const response = await fetch(`${API_BASE}/actuator/info`, {
+                    method: 'GET',
+                    headers: { 'Content-Type': 'application/json' }
+                });
+                
+                if (response.ok) {
+                    const data = await response.json();
+                    updateStatus('cloud-status', true);
+                    addResult(`Spring Cloud配置正常: ${JSON.stringify(data)}`, 'success');
+                } else {
+                    throw new Error(`HTTP ${response.status}`);
+                }
+            } catch (error) {
+                updateStatus('cloud-status', false);
+                addResult(`Spring Cloud测试失败: ${error.message}`, 'error');
+            }
+        }
+
+        async function testLogin() {
+            try {
+                addResult('测试登录功能...', 'info');
+                const response = await fetch(`${API_BASE}/login`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        username: 'admin',
+                        password: 'admin'
+                    })
+                });
+                
+                if (response.ok) {
+                    const data = await response.json();
+                    addResult(`登录测试成功: ${data.msg || '登录成功'}`, 'success');
+                } else {
+                    addResult(`登录测试: HTTP ${response.status}`, 'info');
+                }
+            } catch (error) {
+                addResult(`登录测试失败: ${error.message}`, 'error');
+            }
+        }
+
+        async function testUserManagement() {
+            try {
+                addResult('测试用户管理...', 'info');
+                const response = await fetch(`${API_BASE}/user/selectPage?pageNum=1&pageSize=5`, {
+                    method: 'GET',
+                    headers: { 'Content-Type': 'application/json' }
+                });
+                
+                if (response.ok) {
+                    const data = await response.json();
+                    addResult(`用户管理测试成功: 获取到 ${data.data?.list?.length || 0} 条用户记录`, 'success');
+                } else {
+                    addResult(`用户管理测试: HTTP ${response.status}`, 'info');
+                }
+            } catch (error) {
+                addResult(`用户管理测试失败: ${error.message}`, 'error');
+            }
+        }
+
+        async function testExamination() {
+            try {
+                addResult('测试体检功能...', 'info');
+                const response = await fetch(`${API_BASE}/examinationOrder/selectPage?pageNum=1&pageSize=5`, {
+                    method: 'GET',
+                    headers: { 'Content-Type': 'application/json' }
+                });
+                
+                if (response.ok) {
+                    const data = await response.json();
+                    addResult(`体检功能测试成功: 获取到 ${data.data?.list?.length || 0} 条体检记录`, 'success');
+                } else {
+                    addResult(`体检功能测试: HTTP ${response.status}`, 'info');
+                }
+            } catch (error) {
+                addResult(`体检功能测试失败: ${error.message}`, 'error');
+            }
+        }
+
+        async function testMedicalLiterature() {
+            try {
+                addResult('测试医疗文献功能...', 'info');
+                const response = await fetch(`${API_BASE}/medical-literature/list?pageNum=1&pageSize=5`, {
+                    method: 'GET',
+                    headers: { 'Content-Type': 'application/json' }
+                });
+                
+                if (response.ok) {
+                    const data = await response.json();
+                    addResult(`医疗文献测试成功: 获取到 ${data.data?.list?.length || 0} 条文献记录`, 'success');
+                } else {
+                    addResult(`医疗文献测试: HTTP ${response.status}`, 'info');
+                }
+            } catch (error) {
+                addResult(`医疗文献测试失败: ${error.message}`, 'error');
+            }
+        }
+
+        async function runFullTest() {
+            addResult('开始运行完整系统测试...', 'info');
+            addResult('='.repeat(50), 'info');
+            
+            await testBackend();
+            await new Promise(resolve => setTimeout(resolve, 1000));
+            
+            await testRabbitMQ();
+            await new Promise(resolve => setTimeout(resolve, 1000));
+            
+            await testRedis();
+            await new Promise(resolve => setTimeout(resolve, 1000));
+            
+            await testSpringCloud();
+            await new Promise(resolve => setTimeout(resolve, 1000));
+            
+            await testLogin();
+            await new Promise(resolve => setTimeout(resolve, 1000));
+            
+            await testUserManagement();
+            await new Promise(resolve => setTimeout(resolve, 1000));
+            
+            await testExamination();
+            await new Promise(resolve => setTimeout(resolve, 1000));
+            
+            await testMedicalLiterature();
+            await new Promise(resolve => setTimeout(resolve, 1000));
+            
+            await testCrawler();
+            
+            addResult('='.repeat(50), 'info');
+            addResult('完整系统测试完成！', 'success');
+        }
+
+        // 页面加载时自动测试后端连接
+        window.onload = function() {
+            addResult('系统集成测试页面已加载', 'info');
+            addResult('点击各个测试按钮开始测试系统功能', 'info');
+        };
+    </script>
+</body>
+</html>
