@@ -58,9 +58,19 @@ nohup.out
 # 用户上传文件
 # ================================
 files/
+springboot/files/
 uploads/
 temp/
 tmp/
+
+# 视频文件
+*.mp4
+*.avi
+*.mov
+*.wmv
+
+# 截图和演示文件
+screenshots/
 
 # ================================
 # IDE 和编辑器
